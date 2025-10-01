@@ -1,0 +1,97 @@
+@use "sass:color";
+
+$accent-light: #17a2b8;
+$accent-dark: #1abc9c;
+
+$min-max-hue-shift-min: -10deg; // shift Min hue toward muted/cool
+$min-max-hue-shift-max: 10deg; // shift Max hue toward energetic/warm
+$min-max-saturation-adjust: 10%;
+$min-max-lightness-adjust: 15%;
+
+// Min color (light mode)
+$accent-color-light-low: color.adjust(
+  $accent-light,
+  $hue: $min-max-hue-shift-min,
+  $saturation: -$min-max-saturation-adjust,
+  $lightness: -$min-max-lightness-adjust
+);
+
+// Max color (light mode)
+$accent-color-light-high: color.adjust(
+  $accent-light,
+  $hue: $min-max-hue-shift-max,
+  $saturation: $min-max-saturation-adjust,
+  $lightness: $min-max-lightness-adjust
+);
+
+// Min color (dark mode)
+$accent-color-dark-low: color.adjust(
+  $accent-dark,
+  $hue: $min-max-hue-shift-min,
+  $saturation: -$min-max-saturation-adjust,
+  $lightness: -$min-max-lightness-adjust
+);
+
+// Max color (dark mode)
+$accent-color-dark-high: color.adjust(
+  $accent-dark,
+  $hue: $min-max-hue-shift-max,
+  $saturation: $min-max-saturation-adjust,
+  $lightness: $min-max-lightness-adjust
+);
+
+:root,
+.force-dark-mode {
+  // Dark mode (default)
+  --background: #1e1e1e;
+  --panel-fill: #2c2c2c;
+  --foreground: #efefef;
+  --green: #76c043;
+  --yellow: #e0a800;
+  --red: #c82333;
+  --accent: #{$accent-dark};
+  --accent-low: #{$accent-color-dark-low};
+  --accent-high: #{$accent-color-dark-high};
+  --min: #{$accent-color-dark-low};
+  --mid: #{$accent-dark};
+  --max: #{$accent-color-dark-high};
+
+  // This is used to invert the dice in dark mode
+  --invert-dark-filter: invert();
+}
+
+@mixin light-mode {
+  --background: #f3f2f0;
+  --panel-fill: #fff9e6;
+  --foreground: #222222;
+  --green: #28a745;
+  --yellow: #ffc107;
+  --red: #dc3545;
+  --accent: #{$accent-light};
+  --accent-low: #{$accent-color-light-low};
+  --accent-high: #{$accent-color-light-high};
+  --min: #{$accent-color-light-low};
+  --mid: #{$accent-light};
+  --max: #{$accent-color-light-high};
+
+  --invert-dark-filter: none;
+}
+
+.force-light-mode {
+  @include light-mode;
+}
+
+@media (prefers-color-scheme: light) {
+  // Light mode
+  :root {
+    @include light-mode;
+  }
+}
+
+:root {
+  --foreground-invert: var(--background);
+  --neutral: #777;
+  --accent-contrast-low: #eaeaea;
+  --accent-contrast: #1e1e1e;
+  --accent-contrast-high: #1e1e1e;
+}

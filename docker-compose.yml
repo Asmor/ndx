@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    image: scrpg-pwa-dev
+    container_name: scrpg-pwa-dev
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    tty: true
+    command: bash

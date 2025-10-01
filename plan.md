@@ -1,0 +1,30 @@
+- [ ] Simple die roller with history
+  - [x] Show images of dice
+  - [x] User clicks on dice to select them
+  - [x] Selected dice are displayed in a "Selected" box
+  - [x] If three dice are already selected, oldest die is discarded when a new one is added
+  - [ ] Style rolling buttons
+  - [x] Roll the dice
+  - [x] Create result display
+  - [x] Create history
+- [ ] Character support
+  - [x] Make sample character
+  - [x] Parse sample character
+  - [x] Display sample character's powers and qualities
+  - [x] Display sample character's status dice
+  - [x] Display sample character's abilities
+  - [x] Select status
+  - [x] Dropdowns for power and quality in abilities
+    - [x] Lock the required p/q
+  - [ ] Provide warnings on parse issues
+  - [x] Roll button
+  - [x] Ability roll display
+    - [x] Verbose (most recent roll)
+    - [ ] Simple (history. Plain text? Option to expand to verbose?)
+  - [ ] Simplified (text) ability roll history?
+- [ ] Persistence support
+  - [ ] Save characters in local storage
+  - [ ] Allow multiple characters
+  - [ ] Character selector
+- [ ] GM Support
+  - [ ] ...
