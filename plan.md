@@ -22,9 +22,12 @@
     - [x] Verbose (most recent roll)
     - [ ] Simple (history. Plain text? Option to expand to verbose?)
   - [ ] Simplified (text) ability roll history?
-- [ ] Persistence support
-  - [ ] Save characters in local storage
+- [x] Persistence support
+  - [x] Save characters in local storage
+  - [x] Character editor
   - [ ] Allow multiple characters
   - [ ] Character selector
 - [ ] GM Support
   - [ ] ...
+- [ ] Update readme
+  - [ ] Syntax/instructions

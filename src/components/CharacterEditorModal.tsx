@@ -103,7 +103,16 @@ const CharacterEditorModal = () => {
         <Editor>
           <TextArea value={def} onChange={handleChange} wrap="off" />
         </Editor>
-        <Instructions>Instructions</Instructions>
+        <Instructions>
+          See{" "}
+          <a
+            href="https://github.com/Asmor/ndx/#ndx-sentinel-comics-rpg-dice-roller"
+            target="_blank"
+          >
+            the readme
+          </a>{" "}
+          for instructions.
+        </Instructions>
         <Validator>
           {validation.error}
           <br />

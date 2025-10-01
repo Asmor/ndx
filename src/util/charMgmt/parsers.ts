@@ -241,7 +241,9 @@ export const parseAbilitySection = (section: string) => {
 
 // todo test
 export const parseAbility = (abilityLine: string): Ability => {
-  const parts = abilityLine.split(regex.ability.split);
+  const parts = abilityLine
+    .split(regex.ability.split)
+    .map((part) => part.trim());
   // ["g:Psychic Assault", "p:Telekinesis", "a:d h:n"];
   if (parts.length < 2 || parts.length > 4) {
     throw new Error(errors.ability.format(abilityLine));
