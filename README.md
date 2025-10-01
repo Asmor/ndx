@@ -155,7 +155,7 @@ An ability can have multiple effects, which are separated by spaces and/or comma
 | :-: | :-: | :-: |
 | `n` | `d` | `x` |
 
-Specifying multiple dice will cause them to be added together. e.g. `a:dx` is an attack with Mid+Max. But see [bugs](#known-bugs) below.
+Specifying multiple dice will cause them to be added together. e.g. `a:dx` is an attack with Mid+Max.
 
 **Tip:** Hey, this thing is called NDX! What a weird coincidence. Also, how is this a tip?
 
@@ -167,4 +167,4 @@ Should be pretty self explanatory. Whatever you write here will be shown in the 
 
 ## Known bugs
 
-- Currently effects using more than one die (e.g. `a:dx`) are broken. Should have this fixed quickly once I get time to look into it.
+- Currently, none

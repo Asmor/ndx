@@ -63,7 +63,7 @@ const regex = {
     pq: /^([pq]!?):/i,
     rollSplit: /[\s,]+/,
     icons: /^(-|[abdhor]+):/i,
-    ndx: /:([ndx])+/i,
+    ndx: /:([ndx]+)/i,
   },
 };
 
@@ -297,15 +297,18 @@ export const parseAbility = (abilityLine: string): Ability => {
       iconString === "-"
         ? []
         : iconString.split("").map((c) => effectCodeToName[c]);
+
     const rawNdx = getMatchOrThrow(
       regex.ability.ndx,
       rawRoll,
       errors.ability.ndx
     );
+
     const ndx: Partial<Record<"n" | "d" | "x", boolean>> = {};
     ["n", "d", "x"].forEach((key) => {
       if (rawNdx.indexOf(key) > -1) ndx[key as "n" | "d" | "x"] = true;
     });
+
     return {
       icons,
       ndx,
