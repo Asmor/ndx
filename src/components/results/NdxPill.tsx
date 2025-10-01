@@ -61,12 +61,12 @@ const Section = styled.div<SectionProps>`
 interface NdxPropsMini {
   ndx: NDX;
 }
-interface NdxPropsLarge extends MinMidMax {
+interface NdxPropsLarge extends MinMidMax, NdxPropsMini {
   variant: "large";
 }
 type NdxProps = NdxPropsMini | NdxPropsLarge;
 const NdxPill = (props: NdxProps) => {
-  const ndx = "ndx" in props ? props.ndx : { n: true, d: true, x: true };
+  const { ndx } = props;
   const { min, mid, max, variant } =
     "variant" in props ? props : { min: 0, mid: 0, max: 0, variant: "small" };
 

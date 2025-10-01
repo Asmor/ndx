@@ -35,7 +35,7 @@ const filterOptions = [
   "hinder",
   "overcome",
   "recover",
-  "Other",
+  "no icon",
 ];
 
 const OptionsContainer = styled.div`
@@ -174,7 +174,7 @@ const Abilities = () => {
     }
 
     if (filter === "All") return abilities;
-    if (filter === "Other")
+    if (filter === "no icon")
       return abilities.filter((ability) =>
         ability.effects.every((effect) => effect.icons.length === 0)
       );
@@ -187,13 +187,23 @@ const Abilities = () => {
   }, [char, status, filter]);
 
   const abilities = useMemo(() => {
-    if (charAbilities.length === 0)
+    if (charAbilities.length === 0) {
+      const noAbilitiesText = (() => {
+        switch (filter) {
+          case "All":
+            return "";
+          case "no icon":
+            return "iconless";
+          default:
+            return filter.toLowerCase();
+        }
+      })();
       return (
         <NoAbilities>
-          No {filter === "All" ? "" : filter.toLowerCase()} abilities available
-          at {status} status.
+          No {noAbilitiesText} abilities available at {status} status.
         </NoAbilities>
       );
+    }
     return charAbilities.map((ability) => (
       <Ability ability={ability} key={ability.name} />
     ));

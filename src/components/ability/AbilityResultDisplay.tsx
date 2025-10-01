@@ -3,7 +3,7 @@ import type { AbilityResult } from "../../util/charMgmt/types";
 import Panel from "../common/Panel";
 import AbilityEffect from "./AbilityEffect";
 import FromNow from "../common/FromNow";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import NdxPill from "../results/NdxPill";
 import { getUsedIcons } from "../../util/ability";
 import IconImg from "../common/IconImg";
@@ -101,6 +101,16 @@ const AbilityResultDisplay = ({
     const lastIndex = rolledParts.length - 1;
     rolledParts[lastIndex] = rolledParts[lastIndex].replace(/, $/, "");
   }
+
+  const pillNdx = useMemo(
+    () => ({
+      n: !ability.single,
+      d: true,
+      x: !ability.single,
+    }),
+    []
+  );
+
   return (
     <Container
       panelTitle={title}
@@ -114,7 +124,7 @@ const AbilityResultDisplay = ({
       </Rolls>
       <Info>{ability.description}</Info>
       <Pill>
-        <NdxPill variant="large" min={min} mid={mid} max={max} />
+        <NdxPill variant="large" min={min} mid={mid} max={max} ndx={pillNdx} />
       </Pill>
       <Effects>
         {ability.effects.map((effect, index) => (
