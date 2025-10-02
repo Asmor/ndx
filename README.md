@@ -131,6 +131,7 @@ Must be the second section, if present. **Optional.**
 - Much like Identity above, the first letter (`p` or `q`) indicating whether the requirement is a power or quality.
 - Then a colon, and the name of the power or quality.
 - **IMPORTANT!** Make sure the power or quality is listed in the appropriate section, and **the name exactly matches**! If you have the quality `Siren's Song d10`, you must refer to it as `q:Siren's Song`. `q:Sirens Song` will **not** work.
+- For abilities which only roll a single power or quality die, add an exclamation point after the p or q. E.g. `p!:Cosmic`.
 
 #### Effects
 

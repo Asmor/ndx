@@ -23,5 +23,4 @@
   - [ ] Syntax/instructions
 - [ ] Mobile
 - Bugs
-  - [x] Multiple dice effects not working
-  - [ ] Clean up single-die view
+  - [ ] Improve error messages from parsing character, particulary wrt misleading errors caused by the optional nature of the abilities' required section

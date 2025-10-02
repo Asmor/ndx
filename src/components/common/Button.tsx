@@ -14,7 +14,7 @@ const Button = styled.button<ButtonProps>`
   border: 1px solid ${colors.fg};
   background-color: ${(p) => getButtonColors(p).bg};
   color: ${(p) => getButtonColors(p).fg};
-  cursor: pointer;
+  cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
   border-radius: 8px;
 
   &:hover {
