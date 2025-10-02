@@ -16,8 +16,15 @@
 				- [Dice](#dice)
 		- [Description](#description)
 	- [Known bugs](#known-bugs)
+	- [Contributing](#contributing)
+	- [Running the application yourself](#running-the-application-yourself)
+		- [Running in Docker](#running-in-docker)
+			- [Initial setup](#initial-setup)
+			- [Running the dev server](#running-the-dev-server)
 
 ## How to use
+
+The application is available at https://asmor.github.io/ndx/
 
 ## Creating a character
 
@@ -169,3 +176,51 @@ Should be pretty self explanatory. Whatever you write here will be shown in the 
 ## Known bugs
 
 - Currently, none
+
+## Contributing
+
+At the moment, I'm not accepting pull requests. That may change in the future. If you have any concerns or suggestions, [open an issue](https://github.com/Asmor/ndx/issues).
+
+## Running the application yourself
+
+### Running in Docker
+
+This project includes a `Dockerfile` and `docker-compose.yml` that let you run the development server inside a containerized Node.js environment.
+
+#### Initial setup
+
+1. **Clone the repo**
+
+   ```bash
+   git clone https://github.com/asmor/ndx.git
+   cd ndx
+   ```
+
+2. **Build and start the container**
+
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **Open a shell inside the container**
+
+   ```bash
+   docker exec -it scrpg-pwa-dev bash
+   ```
+
+   Alternatively, if you're using VSCode it should prompt you to install the Dev Containers addon (if you don't already have it) and then it should be able to connect to the container.
+
+4. **Install dependencies (inside the container)**
+   ```bash
+   npm install
+   ```
+
+#### Running the dev server
+
+Inside the container, run:
+
+```bash
+npm run dev
+```
+
+The app should be available at [http://localhost:5173](http://localhost:5173) in your browser.

@@ -22,5 +22,8 @@
 - [ ] Update readme
   - [ ] Syntax/instructions
 - [ ] Mobile
+- [ ] Offline availability
+  - [ ] Check for new versions and prompt for updates
+  - [ ] Icon?
 - Bugs
   - [ ] Improve error messages from parsing character, particulary wrt misleading errors caused by the optional nature of the abilities' required section
