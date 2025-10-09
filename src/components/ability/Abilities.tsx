@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
-import useCharacters from "../../services/useCharacters";
+import useLoadouts from "../../services/useLoadouts";
 import Ability from "./Ability";
 import styled from "styled-components";
 import Panel, { panelMargin, panelTitleHeight } from "../common/Panel";
-import { colorsByColor } from "../../util/charMgmt/misc";
+import { BlankCharacter, colorsByColor } from "../../util/charMgmt/misc";
 import type { AbilityIcon, GYRO } from "../../constants";
 import type {
   Ability as AbilityType,
@@ -153,10 +153,10 @@ const StyledEdit = styled(Edit)`
 `;
 
 const Abilities = () => {
-  const { getCurrentCharacter, status, setStatus, setShowEditor } =
-    useCharacters();
+  const { getCurrentLoadout, status, setStatus, setShowEditor } = useLoadouts();
   const [filter, setFilter] = useState(filterOptions[0]);
-  const char = getCurrentCharacter();
+  // todo update this to discriminate based on type of loadout
+  const char = (getCurrentLoadout() as Character) ?? BlankCharacter;
 
   const charAbilities = useMemo(() => {
     const abilities: AbilityType[] = [];

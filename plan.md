@@ -19,8 +19,8 @@
   - [ ] Character selector
 - [ ] GM Support
   - [ ] ...
-- [ ] Update readme
-  - [ ] Syntax/instructions
+- [x] Update readme
+  - [x] Syntax/instructions
 - [ ] Mobile
 - [ ] Offline availability
   - [ ] Check for new versions and prompt for updates

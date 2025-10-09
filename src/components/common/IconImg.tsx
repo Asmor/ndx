@@ -2,9 +2,9 @@ import styled from "styled-components";
 import type { AbilityIcon } from "../../constants";
 import icons from "../../util/icons";
 
-const Img = styled.img<{ size: number; fixedWidth?: boolean }>`
+const Img = styled.img<{ size: number; $fixedWidth?: boolean }>`
   height: ${(p) => p.size}px;
-  width: ${(p) => (p.fixedWidth ? `${p.size}px` : "auto")};
+  width: ${(p) => (p.$fixedWidth ? `${p.size}px` : "auto")};
   object-fit: contain;
   object-position: center;
 `;
@@ -23,7 +23,7 @@ const IconImg = ({ size, icon, fixedWidth, className }: IconImgProps) => {
       size={size}
       alt={icon}
       src={imgSrc}
-      fixedWidth={fixedWidth}
+      $fixedWidth={fixedWidth}
       className={className}
     />
   );

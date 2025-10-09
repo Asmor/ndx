@@ -327,7 +327,7 @@ export const parseAbility = (abilityLine: string): Ability => {
 
 // todo test
 export const parseCharacter = (text: string): Character => {
-  const sections = getSections(text);
+  const sections = getSections(trimLines(text));
   const sectionsByType = inferSectionTypes(sections);
   const powers = parsePQSection<Power>("power", sectionsByType.powers);
   const qualities = parsePQSection<Quality>(
@@ -338,6 +338,8 @@ export const parseCharacter = (text: string): Character => {
   const abilities = parseAbilitySection(sectionsByType.abilities);
 
   return {
+    type: "character",
+    ver: 1,
     name: sectionsByType.identity,
     powers,
     qualities,

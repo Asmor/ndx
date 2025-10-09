@@ -29,7 +29,16 @@ export interface Ability {
   single?: boolean;
 }
 
-export interface Character {
+export type LoadoutType = "character";
+export type LoadoutDict = Record<string, Loadout>;
+export interface Loadout {
+  type: LoadoutType;
+  name: string;
+  ver: number;
+}
+
+export interface Character extends Loadout {
+  type: "character";
   name: string;
   status: {
     green: Die;
@@ -40,6 +49,10 @@ export interface Character {
   qualities: Quality[];
   abilities: Record<GYRO | "basic", Ability[]>;
 }
+
+export const isCharacter = (val: Loadout): val is Character => {
+  return val.type === "character";
+};
 
 export interface AbilityResult {
   char: Character;

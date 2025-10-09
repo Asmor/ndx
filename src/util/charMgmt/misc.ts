@@ -1,6 +1,6 @@
 import type { GYRO } from "../../constants";
 import colors from "../colors";
-import type { Power, Quality } from "./types";
+import type { Character, Power, Quality } from "./types";
 
 export const nonePower: Power = {
   name: "(none)",
@@ -19,4 +19,24 @@ export const colorsByColor: Record<GYRO, string> = {
   yellow: colors.yellow,
   red: colors.red,
   out: colors.fg,
+};
+
+export const BlankCharacter: Character = {
+  name: "",
+  ver: 1,
+  type: "character",
+  abilities: {
+    green: [],
+    yellow: [],
+    red: [],
+    out: [],
+    basic: [],
+  },
+  powers: [],
+  qualities: [],
+  status: {
+    green: 8,
+    yellow: 8,
+    red: 8,
+  },
 };

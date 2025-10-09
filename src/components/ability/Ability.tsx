@@ -1,14 +1,15 @@
 import styled from "styled-components";
-import type {
-  AbilityResult,
-  Ability as AbilityType,
-  Character,
-  Power,
-  Quality,
+import {
+  isCharacter,
+  type AbilityResult,
+  type Ability as AbilityType,
+  type Character,
+  type Power,
+  type Quality,
 } from "../../util/charMgmt/types";
 import colors from "../../util/colors";
 import { useCallback, useMemo, useState } from "react";
-import useCharacters from "../../services/useCharacters";
+import useLoadouts from "../../services/useLoadouts";
 import {
   colorsByColor,
   nonePower,
@@ -86,8 +87,14 @@ interface AbilityProps {
 }
 const Ability = ({ ability }: AbilityProps) => {
   const { addAbilityResult } = useHistory();
-  const { status, getStatusDie, getCurrentCharacter } = useCharacters();
-  const char = getCurrentCharacter();
+  const { status, getStatusDie, getCurrentLoadout } = useLoadouts();
+  const char = getCurrentLoadout();
+
+  if (!isCharacter(char)) {
+    // todo probably need to fix this in the future
+    throw "Can't get abilities from non-characters";
+  }
+
   const [selectedPower, setSelectedPower] = useState<Power>(
     getInitialPower(ability, char)
   );

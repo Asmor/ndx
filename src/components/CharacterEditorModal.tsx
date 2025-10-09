@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, type ChangeEvent } from "react";
 import styled from "styled-components";
-import useCharacters from "../services/useCharacters";
+import useLoadouts from "../services/useLoadouts";
 import Panel from "./common/Panel";
 import colors from "../util/colors";
 import { parseCharacter } from "../util/charMgmt/parsers";
@@ -51,8 +51,8 @@ const Validator = styled.div`
   grid-area: validator;
   // text is only shown if invalid
   color: ${colors.red};
-  // so it doesn't jump around when errors are found
-  min-height: 60px;
+  height: 60px;
+  overflow: scroll;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 8px;
@@ -84,14 +84,19 @@ Abilities
 `;
 
 const CharacterEditorModal = () => {
-  const { getRaw, updateChar, showEditor, setShowEditor, getSampleText } =
-    useCharacters();
-  const [def, setDef] = useState(getRaw());
+  const {
+    getRaw,
+    updateLoadout: updateChar,
+    showEditor,
+    setShowEditor,
+    getSampleText,
+  } = useLoadouts();
+  const [def, setDef] = useState("");
   const [validation, setValidation] = useState({ valid: true, error: "" });
   const [wrap, setWrap] = useState(false);
 
   useEffect(() => {
-    setDef(getRaw());
+    if (showEditor) setDef(getRaw());
   }, [showEditor, getRaw]);
 
   useEffect(() => {
@@ -153,7 +158,7 @@ const CharacterEditorModal = () => {
           <Button
             disabled={!validation.valid}
             onClick={() => {
-              updateChar(def, parseCharacter(def));
+              updateChar(parseCharacter(def));
               setShowEditor(false);
             }}
           >

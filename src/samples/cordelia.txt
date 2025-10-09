@@ -1,28 +1,30 @@
 Cordelia
 
+Status d6 d8 d10
+
 Powers
-Cosmic 10
-Mind Tentacles 8
-Telekinesis 10
-Remote Viewing 8
-Absorption 8
+	Cosmic d10
+	Mind Tentacles d8
+	Telekinesis d10
+	Remote Viewing d8
+	Absorption d8
 
 Qualities
-Self-Discipline 12
-Otherworldy Mythos 8
-Siren's Song 8
-
-Status 6, 8, 10
+	Cosmic d10
+	Mind Tentacles d8
+	Telekinesis d10
+	Remote Viewing d8
+	Absorption d8
 
 Abilities
-g:Psychic Assault :: p:Telekinesis :: a:d h:n :: Attack using Telekinesis. Hinder the target using your Min die.
-g:Psychic Coordination :: p:Remote Viewing :: b:d :: Boost using Remote Viewing. Apply that bonus to all hero Attack and Overcome actions until the start of your next turn.
-g:Principle of Science :: o:x :: Overcome while applying specific scientific principles. Use your Max die. You and each of your allies gain a hero point.
-g:Principle of the Sea :: o:x :: Overcome a situation while underwater and use your Max die. You and each of your allies gain a hero point.
-y:Encourage :: p:Cosmic :: a:d b:n :: Attack using Cosmic. Boost all nearby heroes taking Attack or Overcome actions using your Min die until your next turn.
-y:Mass Effect :: p:Mind Tentacles :: bh:d :: Boost or Hinder using Mind Tentacles and apply that mod to multiple close targets.
-y:Astral Projection :: p:Remote Viewing :: o:nx :: Overcome using Remote Viewing and use your Max+Min dice. You do not have to be physically present in the area you are Overcoming.
-y:Telekinetic Assault :: p:Telekinesis :: a:x a:d a:n :: Attack using Telekinesis. Either Attack one target and use your Max die, or two targets and use your Mid die against one and your Min die against another.
-r:Defensive Deflection :: p!:Absorption :: ad:d :: When you would be dealt damage, you may roll your single Absorption die as a Defend against that damage and as an Attack against a nearby target other than the source of that damage.
-r:Summoned Allies :: p:Mind Tentacles :: -:d :: Use Mind Tentacles to create a number of d6 minions equal to your Mid die. Choose the one same basic action that they each perform. They all act at the start of your turn.
-r:Powerful Strike :: p:Cosmic :: a:dx :: Attack using Cosmic. Use your Max+Mid dice.
+	g:Psychic Assault :: p:Telekinesis :: a:d, h:n :: Attack using Telekinesis. Hinder the target using your Min die.
+	g:Psychic Coordination :: p:Remote Viewing :: b:d :: Boost using Remote Viewing. Apply that bonus to all hero Attack and Overcome actions until the start of your next turn.
+	g:Principle of Science :: o:x :: Overcome while applying specific scientific principles. Use your Max die. You and each of your allies gain a hero point.
+	g:Principle of the Sea :: o:x :: Overcome a situation while underwater and use your Max die. You and each of your allies gain a hero point.
+	y:Encourage :: p:Cosmic :: a:d, b:n :: Attack using Cosmic. Boost all nearby heroes taking Attack or Overcome actions using your Min die until your next turn.
+	y:Mass Effect :: p:Mind Tentacles :: bh:d :: Boost or Hinder using Mind Tentacles and apply that mod to multiple close targets.
+	y:Astral Projection :: p:Remote Viewing :: o:nx :: Overcome using Remote Viewing and use your Max+Min dice. You do not have to be physically present in the area you are Overcoming.
+	y:Telekinetic Assault :: p:Telekinesis :: a:x, a:d, a:n :: Attack using Telekinesis. Either Attack one target and use your Max die, or two targets and use your Mid die against one and your Min die against another.
+	r:Defensive Deflection :: p!:Absorption :: ad:d :: When you would be dealt damage, you may roll your single Absorption die as a Defend against that damage and as an Attack against a nearby target other than the source of that damage.
+	r:Summoned Allies :: p:Mind Tentacles :: -:d :: Use Mind Tentacles to create a number of d6 minions equal to your Mid die. Choose the one same basic action that they each perform. They all act at the start of your turn.
+	r:Powerful Strike :: p:Cosmic :: a:dx :: Attack using Cosmic. Use your Max+Mid dice.
