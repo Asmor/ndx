@@ -26,7 +26,7 @@
   - [ ] Check for new versions and prompt for updates
   - [ ] Icon?
 - Bugs
-  - [ ] MAJOR: Serializing characters is bad, qualities are replaced with powers!
+  - [x] MAJOR: Serializing characters is bad, qualities are replaced with powers!
     - [ ] Also, handle bad value in local storage more gracefully. Maybe an error boundary? Present the saved data so it can be copied/edited?
   - [ ] Improve error messages from parsing character, particulary wrt misleading errors caused by the optional nature of the abilities' required section
     - [ ] Address "bad pow"/"bad qual" errors
