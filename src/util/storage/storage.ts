@@ -7,8 +7,16 @@ const storage = {
     if (debugLoop > 20) return Promise.resolve(BlankCharacter as T);
     debugLoop++;
     const stored = localStorage.getItem(key);
-    const result = JSONDX.parse<T>(stored);
-    return Promise.resolve(result);
+    try {
+      const result = JSONDX.parse<T>(stored);
+      return Promise.resolve(result);
+    } catch (ex) {
+      console.error(`Couldn't parse ${key} from local storage:`, {
+        stored,
+        error: ex,
+      });
+      return null;
+    }
   },
 
   set: async (key: string, value: unknown): Promise<void> => {
