@@ -215,14 +215,15 @@ const getInitialPower = (ability: AbilityType, char: Character): Power => {
   const pow = char.powers.find((p) => p.name === ability.required?.name);
 
   if (!pow) {
-    // todo
-    throw "Bad pow!";
+    console.error(
+      `Can't find power '${ability.required.name}' referenced in ability '${ability.name}'`
+    );
   }
 
   return {
     name: ability.required.name,
     type: "power",
-    die: pow.die,
+    die: (pow || nonePower).die,
   };
 };
 
@@ -232,14 +233,15 @@ const getInitialQuality = (ability: AbilityType, char: Character): Quality => {
   const qual = char.qualities.find((q) => q.name === ability.required?.name);
 
   if (!qual) {
-    // todo
-    throw "Bad qual!";
+    console.error(
+      `Can't find quality '${ability.required.name}' referenced in ability '${ability.name}'`
+    );
   }
 
   return {
     name: ability.required.name,
     type: "quality",
-    die: qual.die,
+    die: (qual || noneQuality).die,
   };
 };
 
