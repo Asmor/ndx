@@ -68,7 +68,7 @@ const stringifyAbilities = (c: Character) => {
 const getCharacterDefinition = (c: Character): string => {
   const status = `Status d${c.status.green} d${c.status.yellow} d${c.status.red}`;
   const powers = ["Powers", ...stringifyPqs(c.powers)].join("\n\t");
-  const qualities = ["Qualities", ...stringifyPqs(c.powers)].join("\n\t");
+  const qualities = ["Qualities", ...stringifyPqs(c.qualities)].join("\n\t");
   const abilities = ["Abilities", ...stringifyAbilities(c)].join("\n\t");
 
   return `${c.name}
