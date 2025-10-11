@@ -8,6 +8,6 @@ services:
     volumes:
       - .:/workspace
     tty: true
-    command: bash
+    command: bash -c "cd /workspace && npm run dev"
     ports:
       - "5173:5173"
