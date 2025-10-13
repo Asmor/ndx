@@ -22,7 +22,7 @@ const AbilitiesCont = styled(Panel)`
 `;
 
 const AbilitiesScroll = styled.div`
-  overflow: scroll;
+  overflow: auto;
   min-height: 0;
 `;
 

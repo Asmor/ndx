@@ -52,7 +52,7 @@ const Validator = styled.div`
   // text is only shown if invalid
   color: ${colors.red};
   height: 60px;
-  overflow: scroll;
+  overflow: auto;
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 8px;

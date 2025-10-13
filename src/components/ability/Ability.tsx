@@ -21,6 +21,7 @@ import { rollDice } from "../../util/dice";
 import useHistory from "../../services/useHistory";
 import { getUsedIcons } from "../../util/ability";
 import IconImg from "../common/IconImg";
+import { Dices } from "lucide-react";
 
 const iconSize = 24;
 
@@ -33,10 +34,11 @@ const AbCont = styled.div<AbContProps>`
   display: grid;
   grid-template-areas:
     "icons name button"
-    "icons selectors button"
+    "selectors selectors selectors"
     "desc desc desc";
   grid-template-columns: auto 1fr;
   gap: 8px;
+  align-items: center;
 
   &:not(:first-child) {
     border-top: 1px solid ${colors.neutral};
@@ -49,6 +51,7 @@ const AbName = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
+  font-weight: bold;
 `;
 
 const AbIcons = styled.div`
@@ -203,7 +206,9 @@ const Ability = ({ ability }: AbilityProps) => {
         {qualitySelector}
       </AbSelectors>
       <AbButton>
-        <Button onClick={handleRoll}>Roll</Button>
+        <Button onClick={handleRoll}>
+          <Dices />
+        </Button>
       </AbButton>
       {ability.description && <AbDesc>{ability.description}</AbDesc>}
     </AbCont>

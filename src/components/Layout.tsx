@@ -20,7 +20,7 @@ const LayoutContainer = styled.div`
 const Fill = styled.div`
   height: 100%;
   width: 100%;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 const Right = styled(Fill)`

@@ -119,7 +119,7 @@ const AbilityResultDisplay = ({
     >
       <Rolls>
         {rolledParts.map((part) => (
-          <span>{part}</span>
+          <span key={part}>{part}</span>
         ))}
       </Rolls>
       <Info>{ability.description}</Info>

@@ -7,7 +7,7 @@ const ResultsLayout = styled(FlipMove)`
   display: flex;
   flex-wrap: wrap;
   justify-content: start;
-  overflow: scroll;
+  overflow: auto;
   gap: 8px;
   padding: 8px 0;
 `;
