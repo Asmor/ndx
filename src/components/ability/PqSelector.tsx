@@ -60,7 +60,7 @@ const SingleValueWrapper = styled.div`
   gap: 4px;
 `;
 const SingleValueName = styled.div`
-  flex: 1 1 0;
+  flex: 0 1 auto;
   overflow: hidden;
   text-overflow: ellipsis;
 `;

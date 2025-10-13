@@ -82,7 +82,8 @@ const AbDesc = styled.div`
 `;
 
 const SelectorPlaceholder = styled.div`
-  flex: 1 1 50%;
+  flex: 1 1 0;
+  min-width: 0%;
 `;
 
 interface AbilityProps {
