@@ -10,11 +10,9 @@ Powers
 	Absorption d8
 
 Qualities
-	Cosmic d10
-	Mind Tentacles d8
-	Telekinesis d10
-	Remote Viewing d8
-	Absorption d8
+	Self-Discipline d12
+	Otherworldy Mythos d8
+	Siren's Song d8
 
 Abilities
 	g:Psychic Assault :: p:Telekinesis :: a:d, h:n :: Attack using Telekinesis. Hinder the target using your Min die.
