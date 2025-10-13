@@ -10,7 +10,13 @@ export const getLoadouts = async (): Promise<LoadoutDict> => {
 
 export const setLoadout = async (l: Loadout) => {
   const loadoutKey = l.name;
-  const originalLoadouts = await getLoadouts();
+  let originalLoadouts: LoadoutDict;
+  try {
+    originalLoadouts = await getLoadouts();
+  } catch (ex) {
+    console.error("Error getting loadouts. Resetting.", ex);
+    originalLoadouts = {};
+  }
   const updatedLoadouts = {
     ...originalLoadouts,
     [loadoutKey]: l,
