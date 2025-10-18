@@ -14,6 +14,12 @@ export interface PowerQuality {
 }
 export type Power = PowerQuality & { type: "power" };
 export type Quality = PowerQuality & { type: "quality" };
+export type AbilityType = "a" | "i" | "r";
+export const AbilityTypeString: Record<AbilityType, string> = {
+  a: "Action",
+  i: "Inherent",
+  r: "Reaction",
+};
 
 export interface AbilityEffect {
   icons: AbilityIcon[];
@@ -22,6 +28,7 @@ export interface AbilityEffect {
 
 export interface Ability {
   color: GYRO;
+  type?: AbilityType;
   name: string;
   description?: string;
   required?: Omit<PowerQuality, "die">;

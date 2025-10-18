@@ -123,14 +123,15 @@ Now let's talk about how each of these sections are defined.
 
 Always the first section of the ability. **Mandatory.**
 
-- Just a letter for the color (`g`, `y`, `r`, or `o` for Green, Yellow, Red, and Out, respectively)
+- A letter for the color (`g`reen, `y`ellow, `r`ed, or `o`ut)
+- Optionally followed by a letter for the ability type (`a`ction, `r`eaction, `i`nherent). If you provide the type, it will be displayed in the ability and you can filter on it.
 - Then a colon, and the name of the ability.
 
 Examples:
 
-- `g:None shall pass!`
-- `y:I've had worse.`
-- `r:It's just a flesh wound.`
+- `ga:None shall pass!`
+- `yr:I've had worse.`
+- `ri:It's just a flesh wound.`
 - `o:Alright. We'll call it a draw.`
 
 #### Required

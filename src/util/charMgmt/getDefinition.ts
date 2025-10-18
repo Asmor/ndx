@@ -27,7 +27,7 @@ const iconsToCode: Record<AbilityIcon, string> = {
   none: "-",
 };
 const stringifyAbility = (a: Ability) => {
-  const sections = [`${colorsToCode[a.color]}:${a.name}`];
+  const sections = [`${colorsToCode[a.color]}${a.type ?? ""}:${a.name}`];
 
   if (a.required) {
     const r = a.required;

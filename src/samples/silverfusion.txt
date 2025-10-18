@@ -17,14 +17,14 @@ Qualities
 	Slow to Anger d8
 
 Abilities
-	g:Attune :: p:Awareness :: b:d :: Boost yourself using Awareness. That bonus is persistent and exclusive. Damage dealt using that bonus is all physical.
-	g:Metal Skin :: - :: Reduce the amount of physical damage taken by 1 while you are in the Green zone, 2 while in the Yellow zone, and 3 while in the Red zone.
-	g:Self-Improvement :: p:Agility :: b:d :: Boost yourself using Agility. That bonus is persistent and exclusive.
-	g:Principle of Chaos :: o:x :: Overcome a situation in a way that is truly unpredictable and use your Max die. You and each of your allies gain a hero point.
-	g:Principle of Mastery :: o:x :: Overcome in a situation that uses your powers in a new way and use your Max die. You and each of your allies gain a hero point.
-	y:Bizarre Strike :: p:Teleportation :: a:x, h:d, h:n :: Attack using Teleportation. Use your Max die. Hinder that target with your Mid die. Hinder yourself with your Min die.
-	y:Absorb Essence :: * :: a:d :: When you defeat a minion, roll that minion’s die and Boost yourself using that roll.
-	y:Living Arsenal :: p:Strength :: a:d :: Attack using Strength with a bonus equal to the number of bonuses you currently have.
-	r:Untouchable Movement :: p:Teleportation :: b:nx :: Boost yourself using Teleportation. Use your Max+Min dice. Then, you may end up anywhere else in the scene, avoiding any dangers between your starting and ending locations.
-	r:Paragon Feat :: p:Agility :: o:nx, b:d :: Overcome using Agility in a situation that requires you to be more than humanly capable, like an extreme feat of strength or speed. Use your Max+Min dice. Boost all nearby allies with your Mid die.
-	o:Out :: q!:Close Combat :: b:d :: Boost an ally by rolling your single Close Combat die
+	ga:Attune :: p:Awareness :: b:d :: Boost yourself using Awareness. That bonus is persistent and exclusive. Damage dealt using that bonus is all physical.
+	gi:Metal Skin :: - :: Reduce the amount of physical damage taken by 1 while you are in the Green zone, 2 while in the Yellow zone, and 3 while in the Red zone.
+	ga:Self-Improvement :: p:Agility :: b:d :: Boost yourself using Agility. That bonus is persistent and exclusive.
+	ga:Principle of Chaos :: o:x :: Overcome a situation in a way that is truly unpredictable and use your Max die. You and each of your allies gain a hero point.
+	ga:Principle of Mastery :: o:x :: Overcome in a situation that uses your powers in a new way and use your Max die. You and each of your allies gain a hero point.
+	ya:Bizarre Strike :: p:Teleportation :: a:x, h:d, h:n :: Attack using Teleportation. Use your Max die. Hinder that target with your Mid die. Hinder yourself with your Min die.
+	yr:Absorb Essence :: * :: a:d :: When you defeat a minion, roll that minion's die and Boost yourself using that roll.
+	ya:Living Arsenal :: p:Strength :: a:d :: Attack using Strength with a bonus equal to the number of bonuses you currently have.
+	ra:Untouchable Movement :: p:Teleportation :: b: :: Boost yourself using Teleportation. Use your Max+Min dice. Then, you may end up anywhere else in the scene, avoiding any dangers between your starting and ending locations.
+	ra:Paragon Feat :: p:Agility :: o:, b:d :: Overcome using Agility in a situation that requires you to be more than humanly capable, like an extreme feat of strength or speed. Use your Max+Min dice. Boost all nearby allies with your Mid die.
+	oa:Out :: q!:Close Combat :: b:d :: Boost an ally by rolling your single Close Combat die

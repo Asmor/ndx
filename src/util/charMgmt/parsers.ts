@@ -2,6 +2,7 @@ import type { AbilityIcon, Die, GYRO } from "../../constants";
 import type {
   Ability,
   AbilityEffect,
+  AbilityType,
   Character,
   Power,
   Quality,
@@ -58,11 +59,16 @@ const regex = {
   die: /^(4|6|8|10|12)$/,
   ability: {
     split: /::/,
-    // g:Ability Name
-    color: /^([gyro]):/i,
+    // ga:Ability Name
+    // $1 = g|y|r|o
+    // $2 = a|i|r or undef
+    identity: /^([gyro])([air])?:/i,
     name: /:(.*)/,
     // p:Power Name
-    pq: /^([pq]!?:|\*$)/i,
+    // $1 = p|q or undef
+    // $2 = "!" or undef
+    // $3 = *? or undef
+    pq: /^([pq])(?=(!)?:)|^(\*)$/i,
     rollSplit: /[\s,]+/,
     icons: /^(-|[abdhor]+):/i,
     ndx: /:([ndx]+)/i,
@@ -208,7 +214,7 @@ const getMatchOrThrow = (
   text: string,
   errFunc: (s: string) => string
 ) => {
-  const [, val] = text.match(regex) ?? [];
+  const [, ...val] = text.match(regex) ?? [];
   if (!val) throw new Error(errFunc(text));
   return val;
 };
@@ -251,7 +257,7 @@ export const parseAbility = (abilityLine: string): Ability => {
     throw new Error(errors.ability.format(abilityLine));
   }
 
-  const colorName = parts[0];
+  const identity = parts[0];
   // required power/quality is optional, but if present will always be second
   // and will always start with p or q. Effects will _never_ start with p  or q.
   const reqPq = parts[1].charAt(0).match(/[pq*]/) ? parts[1] : null;
@@ -264,15 +270,15 @@ export const parseAbility = (abilityLine: string): Ability => {
       : rawEffectsString.split(regex.ability.rollSplit);
   const description = parts[descriptionIndex];
 
-  const color = getMatchOrThrow(
-    regex.ability.color,
-    colorName,
+  const [color, type] = getMatchOrThrow(
+    regex.ability.identity,
+    identity,
     errors.ability.color
   );
 
-  const name = getMatchOrThrow(
+  const [name] = getMatchOrThrow(
     regex.ability.name,
-    colorName,
+    identity,
     errors.ability.name
   );
 
@@ -280,27 +286,31 @@ export const parseAbility = (abilityLine: string): Ability => {
   let single: boolean | undefined;
   let generic: boolean | undefined;
   if (reqPq) {
-    const pq = getMatchOrThrow(regex.ability.pq, reqPq, errors.ability.pq);
+    const [pq, isSingle, isGeneric] = getMatchOrThrow(
+      regex.ability.pq,
+      reqPq,
+      errors.ability.pq
+    );
 
-    if (pq === "*") {
+    if (isGeneric) {
       single = true;
       generic = true;
     } else {
-      const pqName = getMatchOrThrow(
+      const [pqName] = getMatchOrThrow(
         regex.ability.name,
         reqPq,
         errors.ability.name
       );
       required = {
         name: pqName,
-        type: pq.match(/p!?/) ? "power" : "quality",
+        type: pq === "p" ? "power" : "quality",
       };
-      if (pq.match(/!/)) single = true;
+      if (isSingle) single = true;
     }
   }
 
   const effects: AbilityEffect[] = rawEffects.map((rawRoll) => {
-    const iconString = getMatchOrThrow(
+    const [iconString] = getMatchOrThrow(
       regex.ability.icons,
       rawRoll,
       errors.ability.icons
@@ -330,6 +340,7 @@ export const parseAbility = (abilityLine: string): Ability => {
 
   return {
     color: colorCodeToName[color],
+    type: (type as AbilityType) || undefined,
     name,
     required,
     effects,

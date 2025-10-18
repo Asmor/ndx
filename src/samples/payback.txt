@@ -16,15 +16,15 @@ Qualities
 	Slow to Anger d8
 
 Abilities
-	g:Overpower :: - :: Whenever you are Boosted, increase that bonus by +1. Then, if that bonus is +5 or higher, take damage equal to that bonus and remove it.
-	g:Defensive Strike :: p:Power Suit :: d:d, a:n :: Defend using ***Power Suit***. Attack using your Min die.
-	g:Precise Strike :: p:Absorption :: a:d :: Attack using ***Absorption***. Ignore all penalties on this Attack, ignore any Defend actions, and it cannot be affected by Reactions.
-	g:Dual Strike :: q:Close Combat :: a:d, a:n :: Attack one target using ***Close Combat***. Attack a second target using your Min die.
-	g:Principle of Amnesia :: o:x :: Overcome a situation where a completely fresh perspective is useful and use your Max die. You and each of your allies gain a hero point.
-	y:Misdirection :: p!:Absorption :: d:x :: When a nearby hero in the Yellow or Red zone would take damage, Defend against that damage by rolling your single ***Absorption*** die, then redirect any remaining damage to a nearby minion of your choice.
-	y:Personal Upgrade :: p:Vitality :: b:x :: Boost yourself using ***Vitality***. Use your Max die. That bonus is persistent and exclusive.
-	y:Throw Minion :: p:Strength :: a:d :: Attack a minion using ***Strength***. Whatever that minion rolls as defense Attacks another target of your choice.
-	r:Push Your Limits :: - :: You have no limit on amount of Reactions you can take. Each time you use a Reaction after the first one each turn, take 1 irreducible damage or take a minor twist.
-	r:Defensive Deflection :: p!:Power Suit :: d:d, a:d :: When you would be dealt damage, you may roll your single ***Power Suit*** die as a Defend against that damage and as an Attack against a nearby target other than the source of that damage.
-	r:Reactive Strike :: p!:Strength :: a:d :: When you are Attacked and dealt damage, you may Attack the source of that damage by rolling your single **Strength** die, plus the amount of damage you take.
-	o:Out :: p!:Absorption :: d:n :: Defend an ally by rolling your single ***Absorption*** die.
+	gi:Overpower :: - :: Whenever you are Boosted, increase that bonus by +1. Then, if that bonus is +5 or higher, take damage equal to that bonus and remove it.
+	ga:Defensive Strike :: p:Power Suit :: d:d, a:n :: Defend using Power Suit. Attack using your Min die.
+	ga:Precise Strike :: p:Absorption :: a:d :: Attack using Absorption. Ignore all penalties on this Attack, ignore any Defend actions, and it cannot be affected by Reactions.
+	ga:Dual Strike :: q:Close Combat :: a:d, a:n :: Attack one target using Close Combat. Attack a second target using your Min die.
+	ga:Principle of Amnesia :: o:x :: Overcome a situation where a completely fresh perspective is useful and use your Max die. You and each of your allies gain a hero point.
+	yr:Misdirection :: p!:Absorption :: d:x :: When a nearby hero in the Yellow or Red zone would take damage, Defend against that damage by rolling your single Absorption die, then redirect any remaining damage to a nearby minion of your choice.
+	ya:Personal Upgrade :: p:Vitality :: b:x :: Boost yourself using Vitality. Use your Max die. That bonus is persistent and exclusive.
+	ya:Throw Minion :: p:Strength :: a:d :: Attack a minion using Strength. Whatever that minion rolls as defense Attacks another target of your choice.
+	ri:Push Your Limits :: - :: You have no limit on amount of Reactions you can take. Each time you use a Reaction after the first one each turn, take 1 irreducible damage or take a minor twist.
+	rr:Defensive Deflection :: p!:Power Suit :: d:d, a:d :: When you would be dealt damage, you may roll your single Power Suit die as a Defend against that damage and as an Attack against a nearby target other than the source of that damage.
+	ra:Reactive Strike :: p!:Strength :: a:d :: When you are Attacked and dealt damage, you may Attack the source of that damage by rolling your single **Strength** die, plus the amount of damage you take.
+	oa:Out :: p!:Absorption :: d:n :: Defend an ally by rolling your single Absorption die.
