@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import NdxPill from "../results/NdxPill";
 import * as iconSrcs from "../../util/icons";
-import type { AbilityEffect as AbilityEffectType } from "../../util/charMgmt/types";
-import type { MinMidMax } from "../../constants";
+import type {
+  AbilityEffect as AbilityEffectType,
+  AbilityResultRoll,
+} from "../../util/charMgmt/types";
 import { useMemo } from "react";
 import colors from "../../util/colors";
 
@@ -27,38 +29,52 @@ const Container = styled.div`
   padding: 4px;
 `;
 
+const getDisplay = (roll: AbilityResultRoll, effect: AbilityEffectType) => {
+  if (typeof roll === "number") {
+    return {
+      pill: null,
+      tooltip: roll.toString(),
+      value: roll,
+    };
+  }
+
+  const value = [
+    { used: effect.ndx.n, val: roll.min },
+    { used: effect.ndx.d, val: roll.mid },
+    { used: effect.ndx.x, val: roll.max },
+  ]
+    .filter(({ used }) => used)
+    .reduce((acc, { val }) => acc + (val as number), 0);
+
+  const parts = [effect.icons.join(", "), "using"];
+  const minMidMax: string[] = [];
+  if (effect.ndx.n) minMidMax.push("Min");
+  if (effect.ndx.d) minMidMax.push("Mid");
+  if (effect.ndx.x) minMidMax.push("Max");
+  parts.push(minMidMax.join("+"), "=", value.toString());
+  const tooltip = parts.join(" ");
+
+  return {
+    pill: <NdxPill ndx={effect.ndx} />,
+    tooltip,
+    value,
+  };
+};
+
 interface AbilityEffectProps {
-  roll: MinMidMax;
+  roll: AbilityResultRoll;
   effect: AbilityEffectType;
 }
 const AbilityEffect = ({ roll, effect }: AbilityEffectProps) => {
-  const value = useMemo(() => {
-    return [
-      { used: effect.ndx.n, val: roll.min },
-      { used: effect.ndx.d, val: roll.mid },
-      { used: effect.ndx.x, val: roll.max },
-    ]
-      .filter(({ used }) => used)
-      .reduce((acc, { val }) => acc + (val as number), 0);
-  }, [roll, effect]);
-
-  const tooltipContent = useMemo(() => {
-    const parts = [effect.icons.join(", "), "using"];
-    const minMidMax: string[] = [];
-    if (effect.ndx.n) minMidMax.push("Min");
-    if (effect.ndx.d) minMidMax.push("Mid");
-    if (effect.ndx.x) minMidMax.push("Max");
-    parts.push(minMidMax.join("+"), "=", value.toString());
-    return parts.join(" ");
-  }, [value, effect]);
+  const { pill, tooltip, value } = useMemo(
+    () => getDisplay(roll, effect),
+    [roll, effect]
+  );
 
   return (
     <>
-      <Container
-        data-tooltip-id="tooltip"
-        data-tooltip-content={tooltipContent}
-      >
-        <NdxPill ndx={effect.ndx} />
+      <Container data-tooltip-id="tooltip" data-tooltip-content={tooltip}>
+        {pill}
         <Icons>
           {effect.icons.map((icon) => (
             <IconImg

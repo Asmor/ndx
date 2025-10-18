@@ -54,9 +54,8 @@ export const isCharacter = (val: Loadout): val is Character => {
   return val.type === "character";
 };
 
-export interface AbilityResult {
+export interface AbilityResultBase {
   char: Character;
-  roll: MinMidMax;
   ability: Ability;
   rolled: {
     power?: Power;
@@ -64,3 +63,27 @@ export interface AbilityResult {
     status?: { name: string; die: number };
   };
 }
+
+export interface AbilityResultFull extends AbilityResultBase {
+  roll: MinMidMax;
+}
+
+export interface AbilityResultSingle extends AbilityResultBase {
+  roll: number;
+}
+
+export type AbilityResult = AbilityResultFull | AbilityResultSingle;
+
+export type AbilityResultRoll = AbilityResult["roll"];
+
+export const isSingleResult = (
+  result: AbilityResult
+): result is AbilityResultSingle => {
+  return typeof result.roll === "number";
+};
+
+export const isFullResult = (
+  result: AbilityResult
+): result is AbilityResultFull => {
+  return typeof result.roll !== "number";
+};

@@ -1,5 +1,8 @@
 import styled, { css } from "styled-components";
-import type { AbilityResult } from "../../util/charMgmt/types";
+import type {
+  AbilityResult,
+  AbilityResultRoll,
+} from "../../util/charMgmt/types";
 import Panel from "../common/Panel";
 import AbilityEffect from "./AbilityEffect";
 import FromNow from "../common/FromNow";
@@ -7,6 +10,7 @@ import { useEffect, useMemo, useState } from "react";
 import NdxPill from "../results/NdxPill";
 import { getUsedIcons } from "../../util/ability";
 import IconImg from "../common/IconImg";
+import { allNDX, type DNotation } from "../../constants";
 
 // todo want to get these resizing to take better advantage of their container's available width.
 const minContainerWidth = 360;
@@ -18,9 +22,9 @@ interface ContainerProps {
 const Container = styled(Panel)<ContainerProps>`
   display: grid;
   grid-template-areas:
-    "pill rolls"
-    "pill info"
-    "pill effects";
+    "side rolls"
+    "side info"
+    "side effects";
   grid-template-rows: auto auto 1fr;
   grid-template-columns: auto 1fr;
   gap: 8px;
@@ -38,8 +42,12 @@ const Container = styled(Panel)<ContainerProps>`
       : ""}
 `;
 
-const Pill = styled.div`
-  grid-area: pill;
+const Side = styled.div`
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 `;
 
 const Rolls = styled.div`
@@ -76,6 +84,25 @@ const conjugate = (
   { name, die }: { name: string; die: number }
 ) => `${label}: ${name} d${die}, `;
 
+const getSideContent = (
+  roll: AbilityResultRoll,
+  rolled: AbilityResult["rolled"]
+) => {
+  if (typeof roll === "number") {
+    const dieSize = Object.values(rolled).find(({ die }) => die)!.die;
+    return (
+      <>
+        <IconImg icon={`d${dieSize}` as DNotation} size={24} />
+        {roll}
+      </>
+    );
+  }
+
+  const { min, mid, max } = roll;
+
+  return <NdxPill variant="large" min={min} mid={mid} max={max} ndx={allNDX} />;
+};
+
 const AbilityResultDisplay = ({
   ability,
   roll,
@@ -84,7 +111,6 @@ const AbilityResultDisplay = ({
 }: AbilityResult & { timestamp: Date }) => {
   const [flash, setFlash] = useState(true);
   useEffect(() => void setTimeout(() => setFlash(false), 100), [setFlash]);
-  const { min, mid, max } = roll;
   const title = (
     <>
       {getUsedIcons(ability).map((icon, index) => (
@@ -102,13 +128,9 @@ const AbilityResultDisplay = ({
     rolledParts[lastIndex] = rolledParts[lastIndex].replace(/, $/, "");
   }
 
-  const pillNdx = useMemo(
-    () => ({
-      n: !ability.single,
-      d: true,
-      x: !ability.single,
-    }),
-    []
+  const sideContent = useMemo(
+    () => getSideContent(roll, rolled),
+    [roll, rolled]
   );
 
   return (
@@ -123,9 +145,7 @@ const AbilityResultDisplay = ({
         ))}
       </Rolls>
       <Info>{ability.description}</Info>
-      <Pill>
-        <NdxPill variant="large" min={min} mid={mid} max={max} ndx={pillNdx} />
-      </Pill>
+      <Side>{sideContent}</Side>
       <Effects>
         {ability.effects.map((effect, index) => (
           <AbilityEffect effect={effect} roll={roll} key={index} />

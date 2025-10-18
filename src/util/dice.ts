@@ -1,4 +1,4 @@
-export function roll(n: number): number {
+export function rollDie(n: number): number {
   if (!Number.isInteger(n) || n < 1) {
     throw new Error("Argument must be a positive integer");
   }
@@ -6,5 +6,5 @@ export function roll(n: number): number {
 }
 
 export function rollDice(...dice: number[]): number[] {
-  return dice.map((n) => roll(n)).sort((a, b) => a - b);
+  return dice.map((n) => rollDie(n)).sort((a, b) => a - b);
 }

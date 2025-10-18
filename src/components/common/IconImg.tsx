@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import type { AbilityIcon } from "../../constants";
+import type { AbilityIcon, DNotation } from "../../constants";
 import icons from "../../util/icons";
 
 const Img = styled.img<{ size: number; $fixedWidth?: boolean }>`
@@ -11,12 +11,12 @@ const Img = styled.img<{ size: number; $fixedWidth?: boolean }>`
 
 interface IconImgProps {
   size: number;
-  icon: AbilityIcon;
+  icon: AbilityIcon | DNotation;
   fixedWidth?: boolean;
   className?: string;
 }
 const IconImg = ({ size, icon, fixedWidth, className }: IconImgProps) => {
-  const imgSrc = icons.action[icon];
+  const imgSrc = icons.action[icon] ?? icons.die[icon as DNotation];
 
   return (
     <Img

@@ -19,6 +19,8 @@ export interface NDX {
   x?: boolean;
 }
 
+export const allNDX: NDX = { n: true, d: true, x: true };
+
 export type Die = 4 | 6 | 8 | 10 | 12;
 
 export type DNotation = "d4" | "d6" | "d8" | "d10" | "d12";

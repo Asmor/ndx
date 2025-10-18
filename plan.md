@@ -25,6 +25,9 @@
 - [ ] Offline availability
   - [ ] Check for new versions and prompt for updates
   - [ ] Icon?
+- [x] Display for single roll
+- [ ] Allow abilities without rolls
+- [ ] Allow abilities with generic rolls (e.g. roll a minion's die...)
 - Bugs
   - [x] MAJOR: Serializing characters is bad, qualities are replaced with powers!
     - [ ] Also, handle bad value in local storage more gracefully. Maybe an error boundary? Present the saved data so it can be copied/edited?
@@ -33,5 +36,3 @@
   - [x] Scroll bars showing up all over the place for bunny and alex
   - [x] Alex's powers too wide for the abilities section?
   - [x] Long power names cause issues
-  - [ ] Allow abilities without rolls
-  - [ ] Allow abilities with generic rolls (e.g. roll a minion's die...)

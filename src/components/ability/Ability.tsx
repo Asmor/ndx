@@ -2,6 +2,8 @@ import styled from "styled-components";
 import {
   isCharacter,
   type AbilityResult,
+  type AbilityResultFull,
+  type AbilityResultSingle,
   type Ability as AbilityType,
   type Character,
   type Power,
@@ -17,7 +19,7 @@ import {
 } from "../../util/charMgmt/misc";
 import PqSelector from "./PqSelector";
 import Button from "../common/Button";
-import { rollDice } from "../../util/dice";
+import { rollDice, rollDie } from "../../util/dice";
 import useHistory from "../../services/useHistory";
 import { getUsedIcons } from "../../util/ability";
 import IconImg from "../common/IconImg";
@@ -146,7 +148,7 @@ const Ability = ({ ability }: AbilityProps) => {
     const statusDie = getStatusDie();
     const dice = [selectedPower.die, selectedQuality.die, getStatusDie()];
     const [min, mid, max] = rollDice(...dice);
-    const result: AbilityResult = {
+    const result: AbilityResultFull = {
       char,
       ability,
       roll: { min, mid, max },
@@ -171,23 +173,20 @@ const Ability = ({ ability }: AbilityProps) => {
   const handleRollSingle = useCallback(() => {
     // todo implement, currently just a copy of rollFull
 
-    const dice: number[] = [];
+    let die: number;
     const rolled: AbilityResult["rolled"] = {};
     if (ability.required?.type === "power") {
-      dice.push(selectedPower.die);
+      die = selectedPower.die;
       rolled.power = selectedPower;
     } else {
-      dice.push(selectedQuality.die);
+      die = selectedQuality.die;
       rolled.quality = selectedQuality;
     }
 
-    const [mid] = rollDice(...dice);
-    const min = 0;
-    const max = 0;
-    const result: AbilityResult = {
+    const result: AbilityResultSingle = {
       char,
       ability,
-      roll: { min, mid, max },
+      roll: rollDie(die),
       rolled,
     };
     addAbilityResult(result);
