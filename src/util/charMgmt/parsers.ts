@@ -220,11 +220,11 @@ const getMatchOrThrow = (
 };
 
 const basicActions = [
-  "g:Basic Attack::a:d",
-  "g:Basic Defend::d:d",
-  "g:Basic Boost::b:d",
-  "g:Basic Hinder::h:d",
-  "g:Basic Overcome::o:d",
+  "ga:Basic Attack::a:d",
+  "ga:Basic Defend::d:d",
+  "ga:Basic Boost::b:d",
+  "ga:Basic Hinder::h:d",
+  "ga:Basic Overcome::o:d",
 ];
 // todo test
 export const parseAbilitySection = (section: string) => {

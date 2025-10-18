@@ -6,7 +6,8 @@ interface ButtonProps {
   disabled?: boolean;
 }
 const Button = styled.button<ButtonProps>`
-  width: 100%;
+  flex: 0 0 fit-content;
+  width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;

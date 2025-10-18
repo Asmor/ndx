@@ -1,17 +1,23 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import useLoadouts from "../../services/useLoadouts";
 import Ability from "./Ability";
 import styled from "styled-components";
 import Panel, { panelMargin, panelTitleHeight } from "../common/Panel";
 import { BlankCharacter, colorsByColor } from "../../util/charMgmt/misc";
 import type { AbilityIcon, GYRO } from "../../constants";
-import type {
-  Ability as AbilityType,
-  Character,
+import {
+  // This is unnecessarily confusing, but...
+  // - Abilty = Component that displays an ability
+  // - AbilityTSType = The TS type which defines the shape of an ability object
+  //   (so-named to disambiguate from AbilityType, which is the type of an
+  //   ability (action, etc))
+  type Ability as AbilityTSType,
+  type Character,
 } from "../../util/charMgmt/types";
 import colors from "../../util/colors";
-import icons from "../../util/icons";
 import { Edit } from "lucide-react";
+import { FilterSelect, type FilterOption } from "../common/FilterSelect";
+import Button from "../common/Button";
 
 const AbilitiesCont = styled(Panel)`
   padding: ${panelTitleHeight}px 0 0 0;
@@ -27,15 +33,23 @@ const AbilitiesScroll = styled.div`
 `;
 
 const statusOptions = ["Green", "Yellow", "Red", "Out"];
-const filterOptions = [
-  "All",
-  "attack",
-  "defend",
-  "boost",
-  "hinder",
-  "overcome",
-  "recover",
-  "no icon",
+const defaultIconFilter = "All";
+const iconFilterOptions: FilterOption<string>[] = [
+  { label: "All", value: "All" },
+  { label: "Attack", value: "attack" },
+  { label: "Defend", value: "defend" },
+  { label: "Boost", value: "boost" },
+  { label: "Hinder", value: "hinder" },
+  { label: "Overcome", value: "overcome" },
+  { label: "Recover", value: "recover" },
+  { label: "No Icons", value: "no icon" },
+];
+const defaultTypeFilter = "All";
+const typeFilterOptions: FilterOption<string>[] = [
+  { label: "All", value: "All" },
+  { label: "Action", value: "a" },
+  { label: "Inherent", value: "i" },
+  { label: "Reaction", value: "r" },
 ];
 
 const OptionsContainer = styled.div`
@@ -74,11 +88,46 @@ const StatusOption = styled(Option)<StatusOptionProps>`
   border: 2px dotted ${(p) => colorsByColor[p.color]};
 `;
 
+const Filters = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+`;
+
 const NoAbilities = styled.div`
   padding: 24px;
   display: flex;
   justify-content: center;
 `;
+
+const evalAbilityFilter = (
+  ability: AbilityTSType,
+  iconFilter: string,
+  typeFilter: string
+) => {
+  if (iconFilter !== "All") {
+    if (iconFilter === "no icon") {
+      const hasIcons = ability.effects.some(
+        (effect) => effect.icons.length > 0
+      );
+
+      if (hasIcons) return false;
+    } else {
+      const hasIcon = ability.effects.some((effect) =>
+        effect.icons.includes(iconFilter as AbilityIcon)
+      );
+      if (!hasIcon) return false;
+    }
+  }
+
+  if (typeFilter !== "All") {
+    // todo do I want to add an option for matching abilities missing type?
+    return ability.type === typeFilter;
+  }
+
+  return true;
+};
 
 interface StatusOptionsProps {
   char: Character;
@@ -107,46 +156,39 @@ const StatusOptions = ({ char, status, setStatus }: StatusOptionsProps) => (
   </OptionsContainer>
 );
 
-const FilterImg = styled.img`
-  height: 18px;
-`;
+const getNoMatchMessage = (
+  iconFilter: string,
+  typeFilter: string,
+  status: string
+) => {
+  const iconText = (() => {
+    switch (iconFilter) {
+      case "All":
+        return "";
+      case "no icon":
+        return "iconless";
+      default:
+        return iconFilter.toLowerCase();
+    }
+  })();
 
-const getFilterOptionDisplay = (option: string) => {
-  const imgSrc = icons.action[option];
-  if (icons.action[option])
-    return (
-      <FilterImg
-        src={imgSrc}
-        alt={option}
-        data-tooltip-id="tooltip"
-        data-tooltip-content={option}
-      />
-    );
-  return option;
+  const typeText = (() => {
+    switch (typeFilter) {
+      case "All":
+        return "";
+      case "a":
+        return "action";
+      case "i":
+        return "inherent";
+      case "r":
+        return "reaction";
+      default:
+        return iconFilter.toLowerCase();
+    }
+  })();
+
+  return `No ${typeText} ${iconText} abilities available at ${status} status.`;
 };
-
-interface FilterOptionsProps {
-  filter: string;
-  setFilter: (s: string) => void;
-}
-const FilterOptions = ({ filter, setFilter }: FilterOptionsProps) => (
-  <OptionsContainer>
-    {filterOptions.map((option) => {
-      return (
-        <Option key={option}>
-          <input
-            type="radio"
-            name="filter"
-            value={option}
-            checked={filter === option}
-            onChange={() => setFilter(option)}
-          />
-          {getFilterOptionDisplay(option)}
-        </Option>
-      );
-    })}
-  </OptionsContainer>
-);
 
 const StyledEdit = styled(Edit)`
   cursor: pointer;
@@ -154,16 +196,19 @@ const StyledEdit = styled(Edit)`
 
 const Abilities = () => {
   const { getCurrentLoadout, status, setStatus, setShowEditor } = useLoadouts();
-  const [filter, setFilter] = useState(filterOptions[0]);
+  const [iconFilter, setIconFilter] = useState(defaultIconFilter);
+  const [typeFilter, setTypeFilter] = useState(defaultTypeFilter);
   // todo update this to discriminate based on type of loadout
   const char = (getCurrentLoadout() as Character) ?? BlankCharacter;
 
+  // Get all the character's abilities and apply filters
   const charAbilities = useMemo(() => {
-    const abilities: AbilityType[] = [];
+    const abilities: AbilityTSType[] = [];
 
     switch (status) {
       case "Out":
-        return char.abilities.out;
+        abilities.unshift(...char.abilities.out);
+        break;
       case "Red":
         abilities.unshift(...char.abilities.red); /* falls through */
       case "Yellow":
@@ -173,41 +218,30 @@ const Abilities = () => {
         abilities.push(...char.abilities.basic);
     }
 
-    if (filter === "All") return abilities;
-    if (filter === "no icon")
-      return abilities.filter((ability) =>
-        ability.effects.every((effect) => effect.icons.length === 0)
-      );
-
     return abilities.filter((ability) =>
-      ability.effects.some((effect) =>
-        effect.icons.includes(filter as AbilityIcon)
-      )
+      evalAbilityFilter(ability, iconFilter, typeFilter)
     );
-  }, [char, status, filter]);
+  }, [status, char, iconFilter, typeFilter]);
 
+  // map character's abilities to components or display message if none
   const abilities = useMemo(() => {
     if (charAbilities.length === 0) {
-      const noAbilitiesText = (() => {
-        switch (filter) {
-          case "All":
-            return "";
-          case "no icon":
-            return "iconless";
-          default:
-            return filter.toLowerCase();
-        }
-      })();
       return (
         <NoAbilities>
-          No {noAbilitiesText} abilities available at {status} status.
+          {getNoMatchMessage(iconFilter, typeFilter, status)}
         </NoAbilities>
       );
     }
+
     return charAbilities.map((ability) => (
       <Ability ability={ability} key={ability.name} />
     ));
-  }, [charAbilities, filter, status]);
+  }, [charAbilities, iconFilter, status, typeFilter]);
+
+  const resetFilters = useCallback(() => {
+    setIconFilter(defaultIconFilter);
+    setTypeFilter(defaultTypeFilter);
+  }, []);
 
   return (
     <AbilitiesCont
@@ -219,7 +253,23 @@ const Abilities = () => {
       }
     >
       <StatusOptions char={char} status={status} setStatus={setStatus} />
-      <FilterOptions filter={filter} setFilter={setFilter} />
+      <Filters>
+        Icon:
+        <FilterSelect
+          options={iconFilterOptions}
+          selected={iconFilter}
+          setFilter={setIconFilter}
+        />
+        Type:
+        <FilterSelect
+          options={typeFilterOptions}
+          selected={typeFilter}
+          setFilter={setTypeFilter}
+        />
+        <Button $variant="danger" onClick={resetFilters}>
+          reset
+        </Button>
+      </Filters>
       <AbilitiesScroll>{abilities}</AbilitiesScroll>
     </AbilitiesCont>
   );
