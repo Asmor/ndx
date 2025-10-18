@@ -27,6 +27,7 @@ export interface Ability {
   required?: Omit<PowerQuality, "die">;
   effects: AbilityEffect[];
   single?: boolean;
+  generic?: boolean;
 }
 
 export type LoadoutType = "character";
@@ -61,6 +62,7 @@ export interface AbilityResultBase {
     power?: Power;
     quality?: Quality;
     status?: { name: string; die: number };
+    generic?: { name: string; die: number };
   };
 }
 

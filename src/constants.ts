@@ -25,6 +25,16 @@ export type Die = 4 | 6 | 8 | 10 | 12;
 
 export type DNotation = "d4" | "d6" | "d8" | "d10" | "d12";
 
+export const allDice: DNotation[] = ["d4", "d6", "d8", "d10", "d12"];
+
+export const DNotationToDie: Record<DNotation, Die> = {
+  d4: 4,
+  d6: 6,
+  d8: 8,
+  d10: 10,
+  d12: 12,
+};
+
 export interface MinMidMax {
   min: number;
   mid: number;

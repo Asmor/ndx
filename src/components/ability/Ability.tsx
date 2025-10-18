@@ -24,6 +24,7 @@ import useHistory from "../../services/useHistory";
 import { getUsedIcons } from "../../util/ability";
 import IconImg from "../common/IconImg";
 import { Dices } from "lucide-react";
+import { allDice, DNotationToDie, type DNotation } from "../../constants";
 
 const iconSize = 24;
 
@@ -69,6 +70,7 @@ const AbSelectors = styled.div`
   grid-area: selectors;
   display: flex;
   gap: 8px;
+  justify-content: space-around;
 `;
 
 const AbButton = styled.div`
@@ -86,6 +88,10 @@ const AbDesc = styled.div`
 const SelectorPlaceholder = styled.div`
   flex: 1 1 0;
   min-width: 0%;
+`;
+
+const DieButton = styled(Button)`
+  flex: 0 0 52px;
 `;
 
 interface AbilityProps {
@@ -171,8 +177,6 @@ const Ability = ({ ability }: AbilityProps) => {
   ]);
 
   const handleRollSingle = useCallback(() => {
-    // todo implement, currently just a copy of rollFull
-
     let die: number;
     const rolled: AbilityResult["rolled"] = {};
     if (ability.required?.type === "power") {
@@ -192,24 +196,53 @@ const Ability = ({ ability }: AbilityProps) => {
     addAbilityResult(result);
   }, [selectedPower, selectedQuality, char, ability, addAbilityResult]);
 
+  const handleRollGeneric = useCallback(
+    (dN: DNotation) => {
+      const die = DNotationToDie[dN];
+
+      const result: AbilityResultSingle = {
+        char,
+        ability,
+        roll: rollDie(die),
+        rolled: { generic: { die, name: dN } },
+      };
+      addAbilityResult(result);
+    },
+    [ability, addAbilityResult, char]
+  );
+
   const handleRoll = useCallback(() => {
     if (ability.single) handleRollSingle();
     else handleRollFull();
   }, [handleRollFull, handleRollSingle, ability]);
 
+  const selectors = useMemo(() => {
+    if (!ability.generic)
+      return (
+        <>
+          {powerSelector}
+          {qualitySelector}
+        </>
+      );
+    return allDice.map((die) => (
+      <DieButton key={die} onClick={() => handleRollGeneric(die)}>
+        <IconImg icon={die} size={24} />
+      </DieButton>
+    ));
+  }, [ability, powerSelector, qualitySelector, handleRollGeneric]);
+
   return (
     <AbCont $ab={ability}>
       <AbName>{ability.name}</AbName>
       <AbIcons>{iconImgs}</AbIcons>
-      <AbSelectors>
-        {powerSelector}
-        {qualitySelector}
-      </AbSelectors>
-      <AbButton>
-        <Button onClick={handleRoll}>
-          <Dices />
-        </Button>
-      </AbButton>
+      <AbSelectors>{selectors}</AbSelectors>
+      {!ability.generic && (
+        <AbButton>
+          <Button onClick={handleRoll}>
+            <Dices />
+          </Button>
+        </AbButton>
+      )}
       {ability.description && <AbDesc>{ability.description}</AbDesc>}
     </AbCont>
   );

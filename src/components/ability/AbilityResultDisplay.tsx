@@ -119,10 +119,13 @@ const AbilityResultDisplay = ({
       {ability.name}
     </>
   );
+
   const rolledParts: string[] = [];
   if (rolled.power) rolledParts.push(conjugate("P", rolled.power));
   if (rolled.quality) rolledParts.push(conjugate("Q", rolled.quality));
   if (rolled.status) rolledParts.push(conjugate("S", rolled.status));
+  if (rolled.generic) rolledParts.push(`Rolled ${rolled.generic.name}`);
+
   if (rolledParts.length > 0) {
     const lastIndex = rolledParts.length - 1;
     rolledParts[lastIndex] = rolledParts[lastIndex].replace(/, $/, "");

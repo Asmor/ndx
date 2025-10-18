@@ -27,7 +27,9 @@
   - [ ] Icon?
 - [x] Display for single roll
 - [ ] Allow abilities without rolls
-- [ ] Allow abilities with generic rolls (e.g. roll a minion's die...)
+- [x] Allow abilities with generic rolls (e.g. roll a minion's die...)
+- [ ] More testing (parsers)
+- [ ] Bold required power/quality name in ability description
 - Bugs
   - [x] MAJOR: Serializing characters is bad, qualities are replaced with powers!
     - [ ] Also, handle bad value in local storage more gracefully. Maybe an error boundary? Present the saved data so it can be copied/edited?

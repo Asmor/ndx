@@ -15,6 +15,7 @@ Qualities
 	Siren's Song d8
 
 Abilities
+	g:Generic Test :: * :: a:! :: A test of generic die abilities.
 	g:Psychic Assault :: p:Telekinesis :: a:d, h:n :: Attack using Telekinesis. Hinder the target using your Min die.
 	g:Psychic Coordination :: p:Remote Viewing :: b:d :: Boost using Remote Viewing. Apply that bonus to all hero Attack and Overcome actions until the start of your next turn.
 	g:Principle of Science :: o:x :: Overcome while applying specific scientific principles. Use your Max die. You and each of your allies gain a hero point.
