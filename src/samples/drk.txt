@@ -1,0 +1,27 @@
+Dr. K
+
+Status d6 d8 d10
+
+Powers
+    Inventions d10
+    Deduction d8
+    Inter Samples d10
+    Teleportation d6
+    Chemistry Set d6
+
+Qualities
+    Science d12
+    Technology d8
+    Conviction d10
+    Determined Obsession d8
+
+Abilities
+    g:Throw a portal grenade :: p:Inventions :: a:d :: Attack using Inventions. You may move the target of the Attack anywhere else nearby. If the target goes next, you decide who takes the next turn after that.
+    g:Throw a freezing vial :: p:Chemistry Set :: h:d :: Hinder using Chemistry Set. That penalty is persistent and exclusive.
+    g:Principle of the Lab :: o:x :: Overcome while in a familiar workspace or when you have ample research time. Use your Max die. You and each of your allies gain a hero point.
+    g:Principle of Ambition :: o:x :: Overcome a situation where someone else has given you a bonus from a Boost and use your Max die. You and each of your allies gain a hero point.
+    y:Charge shield battery :: p:Inventions :: a:d, a:x, r:n :: Attack using Inventions. Then, if the target of the Attack survived, also Attack that target with your Max die. Otherwise, Recover an amount of Health equal to your min die.
+    y:Dimentional Shift :: p!:Deduction :: d:d, b:d :: When you are attacked, first roll your single Deduction die. Defend yourself with that roll. Then, Boost yourself using that roll.
+    r:Open dimensional portal :: p:Inventions :: -:d :: Use Inventions to create a number of d6 minions equal to your Mid die. Choose the one same basic action that they each perform. They all act at the start of your turn.
+    r:Explosive sample :: p:Inter Samples :: a:ndx, a:n :: Attack multiple nearby targets using Interdimentional Samples. Use your Max+Mid+Min dice. Take irreducible damage equal to your Min die.
+    o:out :: q:Determined Obsession :: d:d :: Defend an ally by rolling your single Determined Obsession die.
