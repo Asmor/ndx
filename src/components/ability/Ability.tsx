@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {
+  abilityTypeToString,
   isCharacter,
   type AbilityResult,
   type AbilityResultFull,
@@ -10,7 +11,7 @@ import {
   type Quality,
 } from "../../util/charMgmt/types";
 import colors from "../../util/colors";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, type ReactNode } from "react";
 import useLoadouts from "../../services/useLoadouts";
 import {
   colorsByColor,
@@ -82,7 +83,17 @@ const AbButton = styled.div`
 const AbDesc = styled.div`
   grid-area: desc;
   padding: 8px;
+`;
+
+const Description = styled.span`
   font-style: italic;
+`;
+
+const Type = styled.span`
+  font-weight: bold;
+  font-variant: small-caps;
+  font-size: 0.9rem;
+  margin-right: 8px;
 `;
 
 const SelectorPlaceholder = styled.div`
@@ -235,6 +246,21 @@ const Ability = ({ ability }: AbilityProps) => {
     );
   }, [ability, powerSelector, qualitySelector, handleRollGeneric]);
 
+  const description = useMemo(() => {
+    const parts: ReactNode[] = [];
+
+    if (ability.type) {
+      parts.push(<Type>{abilityTypeToString[ability.type]}.</Type>);
+    }
+
+    if (ability.description) {
+      parts.push(<Description>{ability.description}</Description>);
+    }
+
+    if (!parts.length) return null;
+    return parts;
+  }, [ability.description, ability.type]);
+
   return (
     <AbCont $ab={ability}>
       <AbName>{ability.name}</AbName>
@@ -247,7 +273,7 @@ const Ability = ({ ability }: AbilityProps) => {
           </Button>
         </AbButton>
       )}
-      {ability.description && <AbDesc>{ability.description}</AbDesc>}
+      {description && <AbDesc>{description}</AbDesc>}
     </AbCont>
   );
 };

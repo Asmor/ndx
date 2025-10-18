@@ -15,7 +15,7 @@ export interface PowerQuality {
 export type Power = PowerQuality & { type: "power" };
 export type Quality = PowerQuality & { type: "quality" };
 export type AbilityType = "a" | "i" | "r";
-export const AbilityTypeString: Record<AbilityType, string> = {
+export const abilityTypeToString: Record<AbilityType, string> = {
   a: "Action",
   i: "Inherent",
   r: "Reaction",
