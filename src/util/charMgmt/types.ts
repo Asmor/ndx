@@ -28,6 +28,7 @@ export interface Ability {
   effects: AbilityEffect[];
   single?: boolean;
   generic?: boolean;
+  noRoll?: boolean;
 }
 
 export type LoadoutType = "character";

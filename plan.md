@@ -15,8 +15,8 @@
 - [x] Persistence support
   - [x] Save characters in local storage
   - [x] Character editor
-  - [ ] Allow multiple characters
-  - [ ] Character selector
+  - [ ] Allow multiple characters **PRIORITY**
+  - [ ] Character selector **PRIORITY**
 - [ ] GM Support
   - [ ] ...
 - [x] Update readme
@@ -26,7 +26,7 @@
   - [ ] Check for new versions and prompt for updates
   - [ ] Icon?
 - [x] Display for single roll
-- [ ] Allow abilities without rolls
+- [x] Allow abilities without rolls
 - [x] Allow abilities with generic rolls (e.g. roll a minion's die...)
 - [ ] More testing (parsers)
 - [ ] Bold required power/quality name in ability description
@@ -34,7 +34,7 @@
   - [x] MAJOR: Serializing characters is bad, qualities are replaced with powers!
     - [ ] Also, handle bad value in local storage more gracefully. Maybe an error boundary? Present the saved data so it can be copied/edited?
   - [ ] Improve error messages from parsing character, particulary wrt misleading errors caused by the optional nature of the abilities' required section
-    - [d] Address "bad pow"/"bad qual" errors
+    - [x] Address "bad pow"/"bad qual" errors
   - [x] Scroll bars showing up all over the place for bunny and alex
   - [x] Alex's powers too wide for the abilities section?
   - [x] Long power names cause issues

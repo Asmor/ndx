@@ -38,7 +38,7 @@ const useLoadouts = () => {
       const initialChar = Object.values(storedLoadouts)[0] ?? cordelia;
       setCurrentLoadout(initialChar);
     })();
-  }, []);
+  }, [initialized, setCurrentLoadout, setInitialized, setLoadouts]);
 
   const getStatusDie = () => {
     if (status === "Out")

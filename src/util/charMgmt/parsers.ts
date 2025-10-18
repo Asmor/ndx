@@ -42,6 +42,8 @@ export const errors = {
       `Bad icons for '${s}'. Should either be '-' or some combination of 'a', 'b', 'd', 'h', 'o', and/or 'r'. Examples: 'bh:d', '-:nd'. [ability.icons]`,
     ndx: (s: string) =>
       `Bad effect dice for '${s}'. Should be some combination of 'n' (min), 'd' (mid), and/or 'x' (max). Examples: 'bh:d', '-:nd'. [ability.ndx]'`,
+    dupes: (names: string[]) =>
+      `Each ability name must be unique. The following ability names are repeated: ${names.join(", ")}. [ability.dupes]`,
   },
 };
 
@@ -255,7 +257,11 @@ export const parseAbility = (abilityLine: string): Ability => {
   const reqPq = parts[1].charAt(0).match(/[pq*]/) ? parts[1] : null;
   const effectsIndex = reqPq ? 2 : 1;
   const descriptionIndex = effectsIndex + 1;
-  const rawEffects = parts[effectsIndex].split(regex.ability.rollSplit);
+  const rawEffectsString = parts[effectsIndex];
+  const rawEffects =
+    rawEffectsString === "-"
+      ? []
+      : rawEffectsString.split(regex.ability.rollSplit);
   const description = parts[descriptionIndex];
 
   const color = getMatchOrThrow(
@@ -320,6 +326,8 @@ export const parseAbility = (abilityLine: string): Ability => {
     };
   });
 
+  const noRoll = !effects.length;
+
   return {
     color: colorCodeToName[color],
     name,
@@ -327,6 +335,7 @@ export const parseAbility = (abilityLine: string): Ability => {
     effects,
     single,
     generic,
+    noRoll,
     description,
   };
 };
@@ -342,6 +351,24 @@ export const parseCharacter = (text: string): Character => {
   );
   const status = parseStatus(sectionsByType.status);
   const abilities = parseAbilitySection(sectionsByType.abilities);
+
+  const abilityNames = new Set<string>();
+  const dupes = new Set<string>();
+  [
+    ...abilities.basic,
+    ...abilities.green,
+    ...abilities.yellow,
+    ...abilities.red,
+    ...abilities.out,
+  ]
+    .map((ability) => ability.name)
+    .forEach((name) =>
+      abilityNames.has(name) ? dupes.add(name) : abilityNames.add(name)
+    );
+
+  if (dupes.size) {
+    throw new Error(errors.ability.dupes([...dupes]));
+  }
 
   return {
     type: "character",

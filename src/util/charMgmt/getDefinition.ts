@@ -35,19 +35,23 @@ const stringifyAbility = (a: Ability) => {
     if (a.single) requiredParts.push("!");
     requiredParts.push(":", r.name);
     sections.push(requiredParts.join(""));
+  } else if (a.generic) {
+    sections.push("*");
   }
 
-  const effectDef = a.effects
-    .map((e) => {
-      const icons = e.icons.length
-        ? e.icons.map((icon) => iconsToCode[icon]).join("")
-        : iconsToCode.none;
-      const dice = Object.keys(e.ndx)
-        .filter((set) => set)
-        .join("");
-      return `${icons}:${dice}`;
-    })
-    .join(", ");
+  const effectDef = a.noRoll
+    ? "-"
+    : a.effects
+        .map((e) => {
+          const icons = e.icons.length
+            ? e.icons.map((icon) => iconsToCode[icon]).join("")
+            : iconsToCode.none;
+          const dice = Object.keys(e.ndx)
+            .filter((set) => set)
+            .join("");
+          return `${icons}:${dice}`;
+        })
+        .join(", ");
 
   sections.push(effectDef);
 

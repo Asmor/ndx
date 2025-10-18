@@ -217,26 +217,30 @@ const Ability = ({ ability }: AbilityProps) => {
   }, [handleRollFull, handleRollSingle, ability]);
 
   const selectors = useMemo(() => {
-    if (!ability.generic)
-      return (
-        <>
-          {powerSelector}
-          {qualitySelector}
-        </>
-      );
-    return allDice.map((die) => (
-      <DieButton key={die} onClick={() => handleRollGeneric(die)}>
-        <IconImg icon={die} size={24} />
-      </DieButton>
-    ));
+    if (ability.noRoll) return null;
+
+    if (ability.generic) {
+      return allDice.map((die) => (
+        <DieButton key={die} onClick={() => handleRollGeneric(die)}>
+          <IconImg icon={die} size={24} />
+        </DieButton>
+      ));
+    }
+
+    return (
+      <>
+        {powerSelector}
+        {qualitySelector}
+      </>
+    );
   }, [ability, powerSelector, qualitySelector, handleRollGeneric]);
 
   return (
     <AbCont $ab={ability}>
       <AbName>{ability.name}</AbName>
-      <AbIcons>{iconImgs}</AbIcons>
+      {!!iconImgs.length && <AbIcons>{iconImgs}</AbIcons>}
       <AbSelectors>{selectors}</AbSelectors>
-      {!ability.generic && (
+      {!ability.generic && !ability.noRoll && (
         <AbButton>
           <Button onClick={handleRoll}>
             <Dices />

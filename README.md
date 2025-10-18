@@ -15,6 +15,7 @@
 			- [Effects](#effects)
 				- [Icons](#icons)
 				- [Dice](#dice)
+				- [Powers without rolls](#powers-without-rolls)
 		- [Description](#description)
 	- [Known bugs](#known-bugs)
 	- [Contributing](#contributing)
@@ -173,6 +174,15 @@ An ability can have multiple effects, which are separated by spaces and/or comma
 Specifying multiple dice will cause them to be added together. e.g. `a:dx` is an attack with Mid+Max.
 
 **Tip:** Hey, this thing is called NDX! What a weird coincidence. Also, how is this a tip?
+
+##### Powers without rolls
+
+You can also create a power without any rolls by setting effects to `-`. This is mostly so that you can define all your powers (like inherents) so you don't lose track of them during the game.
+
+Examples:
+
+- `r:Push Your Limits :: - :: Whenever your limits wouldn't be pushed... push 'em.`
+- `g:Hope you remember what this does :: -`
 
 ### Description
 
