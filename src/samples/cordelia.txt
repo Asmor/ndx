@@ -26,4 +26,4 @@ Abilities
 	rr:Defensive Deflection :: p!:Absorption :: ad:d :: When you would be dealt damage, you may roll your single Absorption die as a Defend against that damage and as an Attack against a nearby target other than the source of that damage.
 	ra:Summoned Allies :: p:Mind Tentacles :: -:d :: Use Mind Tentacles to create a number of d6 minions equal to your Mid die. Choose the one same basic action that they each perform. They all act at the start of your turn.
 	ra:Powerful Strike :: p:Cosmic :: a:dx :: Attack using Cosmic. Use your Max+Mid dice.
-	oa:Out:: - :: Choose an ally. Until your next turn, that ally may reroll one of their dice by using a Reaction.
+	oa:Out :: - :: Choose an ally. Until your next turn, that ally may reroll one of their dice by using a Reaction.

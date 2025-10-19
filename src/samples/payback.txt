@@ -26,5 +26,5 @@ Abilities
 	ya:Throw Minion :: p:Strength :: a:d :: Attack a minion using Strength. Whatever that minion rolls as defense Attacks another target of your choice.
 	ri:Push Your Limits :: - :: You have no limit on amount of Reactions you can take. Each time you use a Reaction after the first one each turn, take 1 irreducible damage or take a minor twist.
 	rr:Defensive Deflection :: p!:Power Suit :: d:d, a:d :: When you would be dealt damage, you may roll your single Power Suit die as a Defend against that damage and as an Attack against a nearby target other than the source of that damage.
-	ra:Reactive Strike :: p!:Strength :: a:d :: When you are Attacked and dealt damage, you may Attack the source of that damage by rolling your single **Strength** die, plus the amount of damage you take.
+	rr:Reactive Strike :: p!:Strength :: a:d :: When you are Attacked and dealt damage, you may Attack the source of that damage by rolling your single **Strength** die, plus the amount of damage you take.
 	oa:Out :: p!:Absorption :: d:n :: Defend an ally by rolling your single Absorption die.

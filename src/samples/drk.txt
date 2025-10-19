@@ -22,6 +22,7 @@ Abilities
 	ga:Principle of Ambition :: o:x :: Overcome a situation where someone else has given you a bonus from a Boost and use your Max die. You and each of your allies gain a hero point.
 	ya:Charge shield battery :: p:Inventions :: a:d, a:x, r:n :: Attack using Inventions. Then, if the target of the Attack survived, also Attack that target with your Max die. Otherwise, Recover an amount of Health equal to your min die.
 	yr:Dimensional Shift :: p!:Deduction :: d:d, b:d :: When you are attacked, first roll your single Deduction die. Defend yourself with that roll. Then, Boost yourself using that roll.
-	rr:Open dimensional portal :: p:Inventions :: -:d :: Use Inventions to create a number of d6 minions equal to your Mid die. Choose the one same basic action that they each perform. They all act at the start of your turn.
-	ra:Explosive sample :: p:Inter Samples :: a:, a:n :: Attack multiple nearby targets using Interdimentional Samples. Use your Max+Mid+Min dice. Take irreducible damage equal to your Min die.
-	oa:out :: q:Determined Obsession :: d:d :: Defend an ally by rolling your single Determined Obsession die.
+	yr:You dropped it in the portal :: - :: When a nearby enemy would create a bonus or penalty, you may remove it immediately.
+	ra:Open dimensional portal :: p:Inventions :: -:d :: Use Inventions to create a number of d6 minions equal to your Mid die. Choose the one same basic action that they each perform. They all act at the start of your turn.
+	ra:Explosive sample :: p:Inter Samples :: a:ndx, a:n :: Attack multiple nearby targets using Interdimentional Samples. Use your Max+Mid+Min dice. Take irreducible damage equal to your Min die.
+	oa:out :: q!:Determined Obsession :: d:d :: Defend an ally by rolling your single Determined Obsession die.

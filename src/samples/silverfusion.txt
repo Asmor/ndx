@@ -25,6 +25,6 @@ Abilities
 	ya:Bizarre Strike :: p:Teleportation :: a:x, h:d, h:n :: Attack using Teleportation. Use your Max die. Hinder that target with your Mid die. Hinder yourself with your Min die.
 	yr:Absorb Essence :: * :: a:d :: When you defeat a minion, roll that minion's die and Boost yourself using that roll.
 	ya:Living Arsenal :: p:Strength :: a:d :: Attack using Strength with a bonus equal to the number of bonuses you currently have.
-	ra:Untouchable Movement :: p:Teleportation :: b: :: Boost yourself using Teleportation. Use your Max+Min dice. Then, you may end up anywhere else in the scene, avoiding any dangers between your starting and ending locations.
-	ra:Paragon Feat :: p:Agility :: o:, b:d :: Overcome using Agility in a situation that requires you to be more than humanly capable, like an extreme feat of strength or speed. Use your Max+Min dice. Boost all nearby allies with your Mid die.
+	ra:Untouchable Movement :: p:Teleportation :: b:nx :: Boost yourself using Teleportation. Use your Max+Min dice. Then, you may end up anywhere else in the scene, avoiding any dangers between your starting and ending locations.
+	ra:Paragon Feat :: p:Agility :: o:nx, b:d :: Overcome using Agility in a situation that requires you to be more than humanly capable, like an extreme feat of strength or speed. Use your Max+Min dice. Boost all nearby allies with your Mid die.
 	oa:Out :: q!:Close Combat :: b:d :: Boost an ally by rolling your single Close Combat die

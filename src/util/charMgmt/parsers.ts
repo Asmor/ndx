@@ -321,14 +321,16 @@ export const parseAbility = (abilityLine: string): Ability => {
         ? []
         : iconString.split("").map((c) => effectCodeToName[c]);
 
-    const rawNdx = generic
-      ? "d"
+    const [rawNdx] = generic
+      ? ["d"]
       : getMatchOrThrow(regex.ability.ndx, rawRoll, errors.ability.ndx);
 
     const ndx: Partial<Record<"n" | "d" | "x", boolean>> = {};
-    ["n", "d", "x"].forEach((key) => {
-      if (rawNdx.indexOf(key) > -1) ndx[key as "n" | "d" | "x"] = true;
-    });
+    if (rawNdx) {
+      ["n", "d", "x"].forEach((key) => {
+        if (rawNdx.indexOf(key) > -1) ndx[key as "n" | "d" | "x"] = true;
+      });
+    }
 
     return {
       icons,
