@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useState, type ChangeEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type ChangeEvent,
+} from "react";
 import styled, { css } from "styled-components";
 import useLoadouts from "../services/useLoadouts";
 import Panel from "./common/Panel";
@@ -8,6 +14,8 @@ import { CheckCircle, XCircle } from "lucide-react";
 import Button from "./common/Button";
 import Link from "./Link";
 import LZString from "lz-string";
+import { CopyButton } from "./common/CopyButton";
+import FlexSpacer from "./common/FlexSpacer";
 
 const Backdrop = styled.div`
   position: fixed;
@@ -55,7 +63,6 @@ const Validator = styled.div<{ $valid: boolean }>`
       ? css`
           // Valid
           display: flex;
-          justify-content: space-between;
           align-items: flex-start;
         `
       : css`
@@ -64,11 +71,19 @@ const Validator = styled.div<{ $valid: boolean }>`
           display: grid;
           grid-template-columns: auto 1fr;
           gap: 8px;
+          color: ${colors.red};
         `}
-  // text is only shown if invalid
-  color: ${colors.red};
   height: 60px;
 `;
+
+const ValidLine = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1 1 auto;
+  gap: 8px;
+`;
+
 const Buttons = styled.div`
   grid-area: buttons;
   display: flex;
@@ -95,6 +110,17 @@ Qualities
 Abilities
 `;
 
+const getShareLink = (data: string) => {
+  const { protocol, host, pathname } = document.location;
+  const shareData = LZString.compressToEncodedURIComponent(data);
+  return `${protocol}//${host}${pathname}?character=${shareData}`;
+};
+
+const getMarkdownShareLink = (name: string, data: string) => {
+  const link = getShareLink(data);
+  return `[Load ${name} in NDX](${link})`;
+};
+
 const CharacterEditorModal = () => {
   const {
     getRaw,
@@ -104,7 +130,11 @@ const CharacterEditorModal = () => {
     getSampleText,
   } = useLoadouts();
   const [def, setDef] = useState("");
-  const [validation, setValidation] = useState({ valid: true, error: "" });
+  const [validation, setValidation] = useState({
+    valid: true,
+    error: "",
+    name: "",
+  });
   const [wrap, setWrap] = useState(false);
 
   useEffect(() => {
@@ -114,14 +144,12 @@ const CharacterEditorModal = () => {
     }
   }, [showEditor, getRaw]);
 
-  const shareData = LZString.compressToEncodedURIComponent(def);
-
   useEffect(() => {
     try {
-      parseCharacter(def);
-      setValidation({ valid: true, error: "" });
+      const name = parseCharacter(def).name;
+      setValidation({ valid: true, error: "", name });
     } catch (ex) {
-      setValidation({ valid: false, error: (ex as Error).message });
+      setValidation({ valid: false, error: (ex as Error).message, name: "" });
     }
   }, [def]);
 
@@ -131,6 +159,20 @@ const CharacterEditorModal = () => {
     },
     [setDef]
   );
+
+  const copyButtons = useMemo(() => {
+    if (!validation.valid) return null;
+    return (
+      <>
+        Copy:
+        <CopyButton text={def}>text</CopyButton>
+        <CopyButton text={getShareLink(def)}>link (raw)</CopyButton>
+        <CopyButton text={getMarkdownShareLink(validation.name, def)}>
+          link (markdown)
+        </CopyButton>
+      </>
+    );
+  }, [def, validation]);
 
   if (!showEditor) return null;
   return (
@@ -165,10 +207,11 @@ const CharacterEditorModal = () => {
         </Instructions>
         <Validator $valid={validation.valid}>
           {validation.valid ? (
-            <>
+            <ValidLine>
               <CheckCircle color={colors.green} />
-              <Link href={`?character=${shareData}`}>Sharable link</Link>
-            </>
+              <FlexSpacer />
+              {copyButtons}
+            </ValidLine>
           ) : (
             <XCircle color={colors.red} />
           )}{" "}

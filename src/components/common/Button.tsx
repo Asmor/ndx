@@ -17,6 +17,7 @@ const Button = styled.button<ButtonProps>`
   color: ${(p) => getButtonColors(p).fg};
   cursor: ${(p) => (p.disabled ? "not-allowed" : "pointer")};
   border-radius: 8px;
+  gap: 4px;
 
   &:hover {
     border-color: ${colors.accentLow};

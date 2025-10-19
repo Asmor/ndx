@@ -32,7 +32,7 @@
 - [ ] More testing (parsers)
 - [x] Bold required power/quality name in ability description
 - [x] Add support for action/reaction/inherent on ability definition
-- [ ] Share character via query param
+- [x] Share character via query param
 - Bugs
   - [x] MAJOR: Serializing characters is bad, qualities are replaced with powers!
     - [ ] Also, handle bad value in local storage more gracefully. Maybe an error boundary? Present the saved data so it can be copied/edited?
