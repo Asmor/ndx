@@ -11,6 +11,7 @@ import NdxPill from "../results/NdxPill";
 import { getUsedIcons } from "../../util/ability";
 import IconImg from "../common/IconImg";
 import { allNDX, type DNotation } from "../../constants";
+import { highlightText } from "../../util/strings";
 
 // todo want to get these resizing to take better advantage of their container's available width.
 const minContainerWidth = 360;
@@ -59,9 +60,6 @@ const Rolls = styled.div`
 
 const Info = styled.div`
   grid-area: info;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   height: fit-content;
   gap: 4px;
   font-style: italic;
@@ -147,7 +145,15 @@ const AbilityResultDisplay = ({
           <span key={part}>{part}</span>
         ))}
       </Rolls>
-      <Info>{ability.description}</Info>
+      <Info>
+        {(ability.description &&
+          ability.required?.name &&
+          highlightText({
+            text: ability.description,
+            phrase: ability.required.name,
+          })) ||
+          ability.description}
+      </Info>
       <Side>{sideContent}</Side>
       <Effects>
         {ability.effects.map((effect, index) => (

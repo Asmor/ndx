@@ -26,6 +26,7 @@ import { getUsedIcons } from "../../util/ability";
 import IconImg from "../common/IconImg";
 import { Dices } from "lucide-react";
 import { allDice, DNotationToDie, type DNotation } from "../../constants";
+import { highlightText } from "../../util/strings";
 
 const iconSize = 24;
 
@@ -254,12 +255,18 @@ const Ability = ({ ability }: AbilityProps) => {
     }
 
     if (ability.description) {
-      parts.push(<Description>{ability.description}</Description>);
+      const descriptionText = ability.required?.name
+        ? highlightText({
+            text: ability.description,
+            phrase: ability.required.name,
+          })
+        : ability.description;
+      parts.push(<Description>{descriptionText}</Description>);
     }
 
     if (!parts.length) return null;
     return parts;
-  }, [ability.description, ability.type]);
+  }, [ability]);
 
   return (
     <AbCont $ab={ability}>

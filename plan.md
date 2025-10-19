@@ -29,9 +29,8 @@
 - [x] Allow abilities without rolls
 - [x] Allow abilities with generic rolls (e.g. roll a minion's die...)
 - [ ] More testing (parsers)
-- [ ] Bold required power/quality name in ability description
-- [ ] Add support for action/reaction/inherent on ability definition
-  - Probably just add after the color, e.g. `ga:Green Action`, `ri:Red Inherent`.
+- [x] Bold required power/quality name in ability description
+- [x] Add support for action/reaction/inherent on ability definition
 - Bugs
   - [x] MAJOR: Serializing characters is bad, qualities are replaced with powers!
     - [ ] Also, handle bad value in local storage more gracefully. Maybe an error boundary? Present the saved data so it can be copied/edited?
