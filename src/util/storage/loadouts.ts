@@ -10,15 +10,17 @@ export const getLoadouts = async (): Promise<LoadoutDict> => {
 
 export const setLoadout = async (l: Loadout) => {
   const loadoutKey = l.name;
-  let originalLoadouts: LoadoutDict;
-  try {
-    originalLoadouts = await getLoadouts();
-  } catch (ex) {
-    console.error("Error getting loadouts. Resetting.", ex);
-    originalLoadouts = {};
-  }
+  // let originalLoadouts: LoadoutDict;
+  // try {
+  //   originalLoadouts = await getLoadouts();
+  // } catch (ex) {
+  //   console.error("Error getting loadouts. Resetting.", ex);
+  //   originalLoadouts = {};
+  // }
   const updatedLoadouts = {
-    ...originalLoadouts,
+    // todo: Until character selection is implemented, can only store a single
+    // loadout or else any newer ones will be hidden
+    // ...originalLoadouts,
     [loadoutKey]: l,
   };
   await storage.set(key, updatedLoadouts);

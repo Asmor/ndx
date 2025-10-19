@@ -17,6 +17,7 @@
   - [x] Character editor
   - [ ] Allow multiple characters **PRIORITY**
   - [ ] Character selector **PRIORITY**
+    - [ ] Once implemented, need to update setLoadout in src/util/storage/loadouts.ts
 - [ ] GM Support
   - [ ] ...
 - [x] Update readme
@@ -39,4 +40,4 @@
   - [x] Scroll bars showing up all over the place for bunny and alex
   - [x] Alex's powers too wide for the abilities section?
   - [x] Long power names cause issues
-  - [ ] Local storage not saving **PRIORITY**
+  - [x] Local storage not saving
