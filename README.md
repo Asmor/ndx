@@ -1,6 +1,14 @@
 # NDX: Sentinel Comics RPG Dice Roller
 
+NDX is a browser-based dice roller for the Sentinel Comics RPG. It's currently only really useful for players (sorry GMs), but I hope to add tools for GM support in the future.
+
+<img src="./screenshot.png" alt="Screenshot of NDX in action">
+
 - [NDX: Sentinel Comics RPG Dice Roller](#ndx-sentinel-comics-rpg-dice-roller)
+	- [Another dice roller? But _why_?](#another-dice-roller-but-why)
+	- [Features](#features)
+	- [Future plans](#future-plans)
+	- [What it _isn't_](#what-it-isnt)
 	- [How to use](#how-to-use)
 	- [Creating a character](#creating-a-character)
 		- [Saving your character](#saving-your-character)
@@ -24,9 +32,45 @@
 			- [Initial setup](#initial-setup)
 			- [Running the dev server](#running-the-dev-server)
 
+## Another dice roller? But _why_?
+
+Well, two reasons.
+
+1. I really like making dice rollers. I've probably reinvented this particular wheel dozens of times over the course of my life.
+2. More importantly, the way SCRPG uses dice is unique and I haven't been able to find a single dice roller that does a remotely serviceable job of rolling dice for this game. At best, some of them at least show the 3 individual die rolls and don't add too much additional clutter.
+
+## Features
+
+- Define your character's powers, skills, and abilities.
+- Only shows the abilities you have access to based on your current status.
+  - Filter based on type and/or effect. Find your reactions or overcome abilities quickly!
+- Shows both the actual min, mid, and max rolls; and also the summed up values for each of your ability's effects, along with effect icons to make the results easy to parse at a glance.
+- Character is saved to your device, so you can come back and it'll still be there.
+- No Internet dependence beyond loading the page. No waiting on servers. You click a button, you get your result instantly!
+- Dark and light mode, automatically set based on your system's settings!
+
+## Future plans
+
+- Save multiple characters
+- GM mode
+- Mobile support
+- Full offline mode! Save it to your device like an app! No Internet access? No problem!
+- More user-friendly character creation
+
+## What it _isn't_
+
+- Not a full character manager! You'll still need some paper or something!
+- Worth using on mobile! This is something I absolutely intend to implement, but initial development is focused on large screens.
+- Pretty! I'm trained on bits, not pixels!
+- AI-enabled! Sorry, CEOs and tech bros!
+- Filled with ads! This is a passion project! Fuck hustle culture! Make shit for fun and share it for free!
+- Extensively tested! But, like, I have _some_ tests! And some TODO comments reminding me to make others! So that's something!
+- Looking for contributions! Once I get the core features implemented I _may_ open it up to PRs.
+  - But hey, the source is _right here_! When my AuDHD-addled brain enevitably gets bored with this, you can fork it and continue where I left off! You can even
+
 ## How to use
 
-The application is available at https://asmor.github.io/ndx/
+The application is available at https://asmor.github.io/ndx/. Just hit that link and you're good to go.
 
 ## Creating a character
 
