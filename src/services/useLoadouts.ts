@@ -15,7 +15,17 @@ const characterAtom = atom<Loadout>(BlankCharacter);
 
 const showEditorAtom = atom(false);
 const loadsoutAtom = atom<LoadoutDict>();
-const initializedAtom = atom(false);
+
+// Ensures that code a function is run exactly once.
+export const loadoutsInitStatusAtom = atom<"pending" | "done">("pending");
+export const runLoadoutsInitAtom = atom(
+  (get) => get(loadoutsInitStatusAtom),
+  async (get, set, initFn: () => Promise<void>) => {
+    if (get(loadoutsInitStatusAtom) === "done") return;
+    set(loadoutsInitStatusAtom, "done");
+    await initFn();
+  }
+);
 
 // todo populate atoms with async functions now that I have suspense setup
 // also, show a loading indicator?
@@ -25,19 +35,17 @@ const useLoadouts = () => {
   const [currentLoadout, setCurrentLoadout] = useAtom(characterAtom);
   const [showEditor, setShowEditor] = useAtom(showEditorAtom);
   const setLoadouts = useSetAtom(loadsoutAtom);
-  const [initialized, setInitialized] = useAtom(initializedAtom);
+  const runInitOnce = useSetAtom(runLoadoutsInitAtom);
 
   useEffect(() => {
-    // todo find a better way of handling this.
-    if (initialized) return;
-    setInitialized(true);
-    (async () => {
+    runInitOnce(async () => {
       if (document.location.search.match(/\?character=/)) {
         try {
           const [, encoded] = document.location.search.split("=");
           const decoded = LZString.decompressFromEncodedURIComponent(encoded);
           const sharedChar = parseCharacter(decoded);
           setCurrentLoadout(sharedChar);
+          setLoadout(sharedChar);
           history.replaceState(null, "", document.location.pathname);
           return;
         } catch (ex) {
@@ -57,8 +65,8 @@ const useLoadouts = () => {
       // todo remember which loadout was last selected
       const initialChar = Object.values(storedLoadouts)[0] ?? cordelia;
       setCurrentLoadout(initialChar);
-    })();
-  }, [initialized, setCurrentLoadout, setInitialized, setLoadouts]);
+    });
+  }, [runInitOnce, setCurrentLoadout, setLoadouts]);
 
   const getStatusDie = () => {
     if (status === "Out")

@@ -32,6 +32,7 @@
 - [ ] More testing (parsers)
 - [x] Bold required power/quality name in ability description
 - [x] Add support for action/reaction/inherent on ability definition
+- [ ] Share character via query param
 - Bugs
   - [x] MAJOR: Serializing characters is bad, qualities are replaced with powers!
     - [ ] Also, handle bad value in local storage more gracefully. Maybe an error boundary? Present the saved data so it can be copied/edited?
@@ -41,3 +42,5 @@
   - [x] Alex's powers too wide for the abilities section?
   - [x] Long power names cause issues
   - [x] Local storage not saving
+  - [ ] Lingering requests for vite assets
+  - [x] Shareable links not working
