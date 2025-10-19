@@ -6,6 +6,7 @@ import type { Loadout, LoadoutDict } from "../util/charMgmt/types";
 import { getLoadouts, setLoadout } from "../util/storage/loadouts";
 import { BlankCharacter } from "../util/charMgmt/misc";
 import { getDefinition } from "../util/charMgmt/getDefinition";
+import LZString from "lz-string";
 
 const cordelia = parseCharacter(sampleCharacterText);
 
@@ -31,6 +32,25 @@ const useLoadouts = () => {
     if (initialized) return;
     setInitialized(true);
     (async () => {
+      if (document.location.search.match(/\?character=/)) {
+        try {
+          const [, encoded] = document.location.search.split("=");
+          const decoded = LZString.decompressFromEncodedURIComponent(encoded);
+          const sharedChar = parseCharacter(decoded);
+          setCurrentLoadout(sharedChar);
+          history.replaceState(null, "", document.location.pathname);
+          return;
+        } catch (ex) {
+          const [, encoded] = document.location.search.split("=");
+          const decoded = LZString.decompressFromEncodedURIComponent(encoded);
+          console.warn("Failed to load shared character", {
+            ex,
+            encoded,
+            decoded,
+          });
+        }
+      }
+
       const storedLoadouts = await getLoadouts();
 
       setLoadouts(storedLoadouts);

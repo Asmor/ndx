@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, type ChangeEvent } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import useLoadouts from "../services/useLoadouts";
 import Panel from "./common/Panel";
 import colors from "../util/colors";
@@ -7,6 +7,7 @@ import { parseCharacter } from "../util/charMgmt/parsers";
 import { CheckCircle, XCircle } from "lucide-react";
 import Button from "./common/Button";
 import Link from "./Link";
+import LZString from "lz-string";
 
 const Backdrop = styled.div`
   position: fixed;
@@ -47,15 +48,26 @@ const Instructions = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const Validator = styled.div`
+const Validator = styled.div<{ $valid: boolean }>`
   grid-area: validator;
+  ${(p) =>
+    p.$valid
+      ? css`
+          // Valid
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+        `
+      : css`
+          // Errors
+          overflow: auto;
+          display: grid;
+          grid-template-columns: auto 1fr;
+          gap: 8px;
+        `}
   // text is only shown if invalid
   color: ${colors.red};
   height: 60px;
-  overflow: auto;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 8px;
 `;
 const Buttons = styled.div`
   grid-area: buttons;
@@ -96,8 +108,13 @@ const CharacterEditorModal = () => {
   const [wrap, setWrap] = useState(false);
 
   useEffect(() => {
-    if (showEditor) setDef(getRaw());
+    if (showEditor) {
+      const curDef = getRaw();
+      setDef(curDef);
+    }
   }, [showEditor, getRaw]);
+
+  const shareData = LZString.compressToEncodedURIComponent(def);
 
   useEffect(() => {
     try {
@@ -146,9 +163,12 @@ const CharacterEditorModal = () => {
             Wrap lines
           </label>
         </Instructions>
-        <Validator>
+        <Validator $valid={validation.valid}>
           {validation.valid ? (
-            <CheckCircle color={colors.green} />
+            <>
+              <CheckCircle color={colors.green} />
+              <Link href={`?character=${shareData}`}>Sharable link</Link>
+            </>
           ) : (
             <XCircle color={colors.red} />
           )}{" "}
