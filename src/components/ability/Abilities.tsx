@@ -2,8 +2,8 @@ import { useCallback, useMemo, useState } from "react";
 import useLoadouts from "../../services/useLoadouts";
 import Ability from "./Ability";
 import styled from "styled-components";
-import Panel, { panelMargin, panelTitleHeight } from "../common/Panel";
-import { BlankCharacter, colorsByColor } from "../../util/charMgmt/misc";
+import Panel, { panelTitleHeight } from "../common/Panel";
+import { colorsByColor } from "../../util/charMgmt/misc";
 import type { AbilityIcon, GYRO } from "../../constants";
 import {
   // This is unnecessarily confusing, but...
@@ -23,7 +23,6 @@ import { Link } from "react-router";
 const AbilitiesCont = styled(Panel)`
   padding: ${panelTitleHeight}px 0 0 0;
   width: 480px;
-  height: calc(100% - ${panelMargin * 2}px);
   display: flex;
   flex-direction: column;
 `;
@@ -191,34 +190,46 @@ const getNoMatchMessage = (
   return `No ${typeText} ${iconText} abilities available at ${status} status.`;
 };
 
-const Abilities = () => {
-  const { getCurrentLoadout, status, setStatus } = useLoadouts();
+interface AbilitiesProps {
+  char: Character;
+  preview?: boolean;
+}
+const Abilities = ({ preview, char }: AbilitiesProps) => {
+  const { status, setStatus } = useLoadouts();
   const [iconFilter, setIconFilter] = useState(defaultIconFilter);
   const [typeFilter, setTypeFilter] = useState(defaultTypeFilter);
   // todo update this to discriminate based on type of loadout
-  const char = (getCurrentLoadout() as Character) ?? BlankCharacter;
 
   // Get all the character's abilities and apply filters
   const charAbilities = useMemo(() => {
     const abilities: AbilityTSType[] = [];
 
-    switch (status) {
-      case "Out":
-        abilities.unshift(...char.abilities.out);
-        break;
-      case "Red":
-        abilities.unshift(...char.abilities.red); /* falls through */
-      case "Yellow":
-        abilities.unshift(...char.abilities.yellow); /* falls through */
-      default:
-        abilities.unshift(...char.abilities.green);
-        abilities.push(...char.abilities.basic);
+    if (preview) {
+      abilities.push(
+        ...char.abilities.green,
+        ...char.abilities.yellow,
+        ...char.abilities.red,
+        ...char.abilities.out
+      );
+    } else {
+      switch (status) {
+        case "Out":
+          abilities.unshift(...char.abilities.out);
+          break;
+        case "Red":
+          abilities.unshift(...char.abilities.red); /* falls through */
+        case "Yellow":
+          abilities.unshift(...char.abilities.yellow); /* falls through */
+        default:
+          abilities.unshift(...char.abilities.green);
+          abilities.push(...char.abilities.basic);
+      }
     }
 
     return abilities.filter((ability) =>
       evalAbilityFilter(ability, iconFilter, typeFilter)
     );
-  }, [status, char, iconFilter, typeFilter]);
+  }, [status, char, iconFilter, typeFilter, preview]);
 
   // map character's abilities to components or display message if none
   const abilities = useMemo(() => {
@@ -231,27 +242,35 @@ const Abilities = () => {
     }
 
     return charAbilities.map((ability) => (
-      <Ability ability={ability} key={ability.name} />
+      <Ability ability={ability} key={ability.name} preview={preview} />
     ));
-  }, [charAbilities, iconFilter, status, typeFilter]);
+  }, [charAbilities, iconFilter, status, typeFilter, preview]);
 
   const resetFilters = useCallback(() => {
     setIconFilter(defaultIconFilter);
     setTypeFilter(defaultTypeFilter);
   }, []);
 
+  const panelTitle = useMemo(() => {
+    if (preview) {
+      return `${char.name} (preview)`;
+    }
+
+    return (
+      <>
+        {char.name}'s Abilities{" "}
+        <Link to="/editor">
+          <Edit size={18} />
+        </Link>
+      </>
+    );
+  }, [char.name, preview]);
+
   return (
-    <AbilitiesCont
-      panelTitle={
-        <>
-          {char.name}'s Abilities{" "}
-          <Link to="/editor">
-            <Edit size={18} />
-          </Link>
-        </>
-      }
-    >
-      <StatusOptions char={char} status={status} setStatus={setStatus} />
+    <AbilitiesCont panelTitle={panelTitle}>
+      {!preview && (
+        <StatusOptions char={char} status={status} setStatus={setStatus} />
+      )}
       <Filters>
         Icon:
         <FilterSelect

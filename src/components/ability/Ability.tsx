@@ -27,6 +27,7 @@ import IconImg from "../common/IconImg";
 import { Dices } from "lucide-react";
 import { allDice, DNotationToDie, type DNotation } from "../../constants";
 import { highlightText } from "../../util/strings";
+import AbilityEffect from "./AbilityEffect";
 
 const iconSize = 24;
 
@@ -41,7 +42,7 @@ const AbCont = styled.div<AbContProps>`
     "icons name button"
     "selectors selectors selectors"
     "desc desc desc";
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   gap: 8px;
   align-items: center;
 
@@ -106,10 +107,22 @@ const DieButton = styled(Button)`
   flex: 0 0 52px;
 `;
 
+const PreviewInfo = styled.div`
+  flex-grow: 1;
+  padding: 0 8px;
+`;
+
+const PreviewEffects = styled.div`
+  display: flex;
+  justify-content: right;
+  gap: 8px;
+`;
+
 interface AbilityProps {
   ability: AbilityType;
+  preview?: boolean;
 }
-const Ability = ({ ability }: AbilityProps) => {
+const Ability = ({ ability, preview }: AbilityProps) => {
   const { addAbilityResult } = useHistory();
   const { status, getStatusDie, getCurrentLoadout } = useLoadouts();
   const char = getCurrentLoadout();
@@ -229,6 +242,19 @@ const Ability = ({ ability }: AbilityProps) => {
   }, [handleRollFull, handleRollSingle, ability]);
 
   const selectors = useMemo(() => {
+    if (preview) {
+      if (ability.generic) return <PreviewInfo>Generic roll</PreviewInfo>;
+      if (!ability.required) return null;
+      return (
+        <PreviewInfo>
+          {highlightText({
+            text: `Requires ${ability.required.name} (${ability.required.type})`,
+            phrase: ability.required.name,
+          })}
+        </PreviewInfo>
+      );
+    }
+
     if (ability.noRoll) return null;
 
     if (ability.generic) {
@@ -245,13 +271,13 @@ const Ability = ({ ability }: AbilityProps) => {
         {qualitySelector}
       </>
     );
-  }, [ability, powerSelector, qualitySelector, handleRollGeneric]);
+  }, [ability, powerSelector, qualitySelector, handleRollGeneric, preview]);
 
   const description = useMemo(() => {
     const parts: ReactNode[] = [];
 
     if (ability.type) {
-      parts.push(<Type>{abilityTypeToString[ability.type]}.</Type>);
+      parts.push(<Type key="type">{abilityTypeToString[ability.type]}.</Type>);
     }
 
     if (ability.description) {
@@ -261,25 +287,44 @@ const Ability = ({ ability }: AbilityProps) => {
             phrase: ability.required.name,
           })
         : ability.description;
-      parts.push(<Description>{descriptionText}</Description>);
+      parts.push(
+        <Description key="description">{descriptionText}</Description>
+      );
     }
 
     if (!parts.length) return null;
     return parts;
   }, [ability]);
 
+  const rollArea = useMemo(() => {
+    if (preview) {
+      if (!ability.effects.length) return null;
+      return (
+        <PreviewEffects>
+          {ability.effects.map((effect, index) => (
+            <AbilityEffect effect={effect} key={index} />
+          ))}
+        </PreviewEffects>
+      );
+    }
+
+    if (ability.generic || ability.noRoll) {
+      return null;
+    }
+
+    return (
+      <Button onClick={handleRoll}>
+        <Dices />
+      </Button>
+    );
+  }, [ability, handleRoll, preview]);
+
   return (
     <AbCont $ab={ability}>
       <AbName>{ability.name}</AbName>
       {!!iconImgs.length && <AbIcons>{iconImgs}</AbIcons>}
       <AbSelectors>{selectors}</AbSelectors>
-      {!ability.generic && !ability.noRoll && (
-        <AbButton>
-          <Button onClick={handleRoll}>
-            <Dices />
-          </Button>
-        </AbButton>
-      )}
+      <AbButton>{rollArea}</AbButton>
       {description && <AbDesc>{description}</AbDesc>}
     </AbCont>
   );

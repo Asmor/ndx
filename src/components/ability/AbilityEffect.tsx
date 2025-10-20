@@ -29,7 +29,7 @@ const Container = styled.div`
   padding: 4px;
 `;
 
-const getDisplay = (roll: AbilityResultRoll, effect: AbilityEffectType) => {
+const getDisplay = (effect: AbilityEffectType, roll?: AbilityResultRoll) => {
   if (typeof roll === "number") {
     return {
       pill: null,
@@ -38,20 +38,24 @@ const getDisplay = (roll: AbilityResultRoll, effect: AbilityEffectType) => {
     };
   }
 
-  const value = [
-    { used: effect.ndx.n, val: roll.min },
-    { used: effect.ndx.d, val: roll.mid },
-    { used: effect.ndx.x, val: roll.max },
-  ]
-    .filter(({ used }) => used)
-    .reduce((acc, { val }) => acc + (val as number), 0);
-
+  const value = roll
+    ? [
+        { used: effect.ndx.n, val: roll.min },
+        { used: effect.ndx.d, val: roll.mid },
+        { used: effect.ndx.x, val: roll.max },
+      ]
+        .filter(({ used }) => used)
+        .reduce((acc, { val }) => acc + (val as number), 0)
+    : null;
   const parts = [effect.icons.join(", "), "using"];
   const minMidMax: string[] = [];
   if (effect.ndx.n) minMidMax.push("Min");
   if (effect.ndx.d) minMidMax.push("Mid");
   if (effect.ndx.x) minMidMax.push("Max");
-  parts.push(minMidMax.join("+"), "=", value.toString());
+  parts.push(minMidMax.join("+"));
+  if (value) {
+    parts.push(minMidMax.join("+"), "=", value.toString());
+  }
   const tooltip = parts.join(" ");
 
   return {
@@ -62,12 +66,12 @@ const getDisplay = (roll: AbilityResultRoll, effect: AbilityEffectType) => {
 };
 
 interface AbilityEffectProps {
-  roll: AbilityResultRoll;
+  roll?: AbilityResultRoll;
   effect: AbilityEffectType;
 }
 const AbilityEffect = ({ roll, effect }: AbilityEffectProps) => {
   const { pill, tooltip, value } = useMemo(
-    () => getDisplay(roll, effect),
+    () => getDisplay(effect, roll),
     [roll, effect]
   );
 

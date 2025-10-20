@@ -3,10 +3,10 @@ import colors from "../../util/colors";
 import type { MinMidMax, NDX } from "../../constants";
 
 interface PillProps {
-  variant: string;
+  $variant: string;
 }
 const Pill = styled.div<PillProps>`
-  height: ${(p) => (p.variant === "large" ? 128 : 24)}px;
+  height: ${(p) => (p.$variant === "large" ? 128 : 24)}px;
   display: flex;
   align-items: center;
   gap: 2px;
@@ -22,7 +22,7 @@ interface SectionProps {
   $on: boolean;
   label: string;
   value: number;
-  variant: string;
+  $variant: string;
 }
 const Section = styled.div<SectionProps>`
   display: flex;
@@ -32,7 +32,7 @@ const Section = styled.div<SectionProps>`
   flex-direction: column;
   color: ${colors.bg};
   background: ${colors.bg};
-  width: ${(p) => (p.variant === "large" ? 24 : 12)}px;
+  width: ${(p) => (p.$variant === "large" ? 24 : 12)}px;
   position: relative;
   font-weight: bold;
   ${(p) =>
@@ -76,24 +76,24 @@ const NdxPill = (props: NdxProps) => {
   if (ndx.x) pieces.push(`Max${max ? ` ${max}` : ""}`);
   const title = pieces.join(" + ");
   return (
-    <Pill title={title} variant={variant}>
+    <Pill title={title} $variant={variant}>
       <Section
         $on={!!ndx.x}
         label="max"
         value={max}
-        variant={variant}
+        $variant={variant}
       ></Section>
       <Section
         $on={!!ndx.d}
         label="mid"
         value={mid}
-        variant={variant}
+        $variant={variant}
       ></Section>
       <Section
         $on={!!ndx.n}
         label="min"
         value={min}
-        variant={variant}
+        $variant={variant}
       ></Section>
     </Pill>
   );

@@ -1,56 +1,14 @@
-# Current Task
+# Todo
 
-- [x] Routing
-  - [x] Add router
-  - [x] Separate character editor modal out into a new page
-  - [ ] Update character editor to take advantage of being its own page
-- [ ] Then: Visual character editor
-
-# Checklist
-
-- [x] Character support
-  - [x] Make sample character
-  - [x] Parse sample character
-  - [x] Display sample character's powers and qualities
-  - [x] Display sample character's status dice
-  - [x] Display sample character's abilities
-  - [x] Select status
-  - [x] Dropdowns for power and quality in abilities
-    - [x] Lock the required p/q
-  - [x] Provide warnings on parse issues
-  - [x] Roll button
-  - [x] Ability roll display
-    - [x] Verbose (most recent roll)
-  - [ ] Simplified (text) ability roll history?
-- [x] Persistence support
-  - [x] Save characters in local storage
-  - [x] Character editor
-  - [ ] Allow multiple characters **PRIORITY**
-  - [ ] Character selector **PRIORITY**
-    - [ ] Once implemented, need to update setLoadout in src/util/storage/loadouts.ts
+- [ ] Allow multiple characters **PRIORITY**
+- [ ] Character selector **PRIORITY**
+  - [ ] Once implemented, need to update setLoadout in src/util/storage/loadouts.ts
 - [ ] GM Support
-  - [ ] ...
-- [x] Update readme
-  - [x] Syntax/instructions
 - [ ] Mobile
+- [ ] Icon?
 - [ ] Offline availability
   - [ ] Check for new versions and prompt for updates
-  - [ ] Icon?
-- [x] Display for single roll
-- [x] Allow abilities without rolls
-- [x] Allow abilities with generic rolls (e.g. roll a minion's die...)
+- [ ] Simplified (text) ability roll history?
 - [ ] More testing (parsers)
-- [x] Bold required power/quality name in ability description
-- [x] Add support for action/reaction/inherent on ability definition
-- [x] Share character via query param
-- Bugs
-  - [x] MAJOR: Serializing characters is bad, qualities are replaced with powers!
-    - [ ] Also, handle bad value in local storage more gracefully. Maybe an error boundary? Present the saved data so it can be copied/edited?
-  - [ ] Improve error messages from parsing character, particulary wrt misleading errors caused by the optional nature of the abilities' required section
-    - [x] Address "bad pow"/"bad qual" errors
-  - [x] Scroll bars showing up all over the place for bunny and alex
-  - [x] Alex's powers too wide for the abilities section?
-  - [x] Long power names cause issues
-  - [x] Local storage not saving
-  - [ ] Lingering requests for vite assets
-  - [x] Shareable links not working
+- [ ] Investigate how bad local storage states are handled and address
+- [ ] Improve error messages from parsing character, particulary wrt misleading errors caused by the optional nature of the abilities' required section

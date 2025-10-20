@@ -4,7 +4,7 @@
 import styled, { css } from "styled-components";
 import type { ChildProps } from "../../constants";
 import colors from "../../util/colors";
-import React, { useCallback } from "react";
+import { type ReactNode, useCallback } from "react";
 
 export const panelTitleHeight = 24;
 export const panelPadding = 8;
@@ -29,6 +29,8 @@ const getPanelPadding = (p: PanelDivProps) => {
 };
 
 const PanelDiv = styled.div<PanelDivProps>`
+  max-height: calc(100% - ${panelMargin * 2}px);
+  max-width: calc(100% - ${panelMargin * 2}px);
   position: relative;
   background: ${colors.panel};
   color: ${colors.fg};
@@ -75,10 +77,10 @@ const PanelFooter = styled(TitleFooterBase)<PanelTitleProps>`
 `;
 
 interface PanelProps extends ChildProps {
-  panelTitle?: React.ReactNode;
+  panelTitle?: ReactNode;
   className?: string;
   onTitleClick?: Function;
-  panelFooter?: React.ReactNode;
+  panelFooter?: ReactNode;
 }
 
 const Panel = ({

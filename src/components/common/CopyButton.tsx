@@ -1,12 +1,12 @@
-import { useCallback, useMemo, useState, type ReactNode } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Button from "./Button";
 import { Check, Copy } from "lucide-react";
+import type { ChildProps } from "../../constants";
 
 const iconSize = 16;
 
-interface CopyButtonProps {
+interface CopyButtonProps extends ChildProps {
   text: string;
-  children?: ReactNode[] | string;
 }
 export const CopyButton = ({ text, children }: CopyButtonProps) => {
   const [wasCopied, setWasCopied] = useState(false);

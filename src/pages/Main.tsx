@@ -1,15 +1,11 @@
 import styled from "styled-components";
 import Abilities from "../components/ability/Abilities";
 import RecentHistory from "../components/RecentHistory";
+import FullScreenGrid from "../components/layout/FullScreenGrid";
+import useLoadouts from "../services/useLoadouts";
+import type { Character } from "../util/charMgmt/types";
 
-const LayoutContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  display: grid;
+const LayoutContainer = styled(FullScreenGrid)`
   grid-template-areas:
     "right center-top left"
     "right center-bot left";
@@ -37,10 +33,12 @@ const CenterBot = styled(Fill)`
 `;
 
 const Main = () => {
+  const { getCurrentLoadout } = useLoadouts();
+  const char = getCurrentLoadout() as Character;
   return (
     <LayoutContainer>
       <Right>
-        <Abilities />
+        <Abilities char={char} />
       </Right>
       <Left></Left>
       <CenterTop>

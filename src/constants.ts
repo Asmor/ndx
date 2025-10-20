@@ -1,4 +1,4 @@
-import type React from "react";
+import type { ReactNode } from "react";
 
 export type PQ = "power" | "quality";
 
@@ -42,5 +42,5 @@ export interface MinMidMax {
 }
 
 export interface ChildProps {
-  children?: React.ReactNode | React.ReactNode[];
+  children?: ReactNode;
 }

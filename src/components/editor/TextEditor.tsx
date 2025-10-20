@@ -6,33 +6,21 @@ import {
   type ChangeEvent,
 } from "react";
 import styled, { css } from "styled-components";
-import useLoadouts from "../services/useLoadouts";
-import Panel from "../components/common/Panel";
-import colors from "../util/colors";
-import { parseCharacter } from "../util/charMgmt/parsers";
+import useLoadouts from "../../services/useLoadouts";
+import Panel from "../common/Panel";
+import colors from "../../util/colors";
+import { parseCharacter } from "../../util/charMgmt/parsers";
 import { CheckCircle, XCircle } from "lucide-react";
-import Button from "../components/common/Button";
-import TodoRenameMyLink from "../components/Link";
+import Button from "../common/Button";
+import ExtLink from "../common/ExtLink";
 import LZString from "lz-string";
-import { CopyButton } from "../components/common/CopyButton";
-import FlexSpacer from "../components/common/FlexSpacer";
+import { CopyButton } from "../common/CopyButton";
+import FlexSpacer from "../common/FlexSpacer";
 import { useNavigate } from "react-router";
+import type { Character } from "../../util/charMgmt/types";
 
-const Backdrop = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalBody = styled(Panel)`
+const EditorBody = styled(Panel)`
   height: 100%;
-  max-height: 90vh;
   width: 100%;
   max-width: 480px;
   display: grid;
@@ -122,7 +110,10 @@ const getMarkdownShareLink = (name: string, data: string) => {
   return `[Load ${name} in NDX](${link})`;
 };
 
-const TextEditor = () => {
+interface TextEditorProps {
+  setPreviewChar: (char: Character) => void;
+}
+const TextEditor = ({ setPreviewChar }: TextEditorProps) => {
   const navigate = useNavigate();
   const { getRaw, updateLoadout: updateChar, getSampleText } = useLoadouts();
   const [def, setDef] = useState("");
@@ -140,12 +131,13 @@ const TextEditor = () => {
 
   useEffect(() => {
     try {
-      const name = parseCharacter(def).name;
-      setValidation({ valid: true, error: "", name });
+      const char = parseCharacter(def);
+      setValidation({ valid: true, error: "", name: char.name });
+      setPreviewChar(char);
     } catch (ex) {
       setValidation({ valid: false, error: (ex as Error).message, name: "" });
     }
-  }, [def]);
+  }, [def, setPreviewChar]);
 
   const handleChange = useCallback(
     (evt: ChangeEvent<HTMLTextAreaElement>) => {
@@ -169,67 +161,65 @@ const TextEditor = () => {
   }, [def, validation]);
 
   return (
-    <Backdrop>
-      <ModalBody panelTitle="Edit character">
-        <Editor>
-          <TextArea
-            value={def}
-            onChange={handleChange}
-            wrap={wrap ? "on" : "off"}
-          />
-        </Editor>
-        <Instructions>
-          <span>
-            See{" "}
-            <TodoRenameMyLink
-              href="https://github.com/Asmor/ndx/#ndx-sentinel-comics-rpg-dice-roller"
-              target="_blank"
-            >
-              the readme
-            </TodoRenameMyLink>{" "}
-            for instructions.
-          </span>
-          <label>
-            <input
-              type="checkbox"
-              onChange={() => setWrap(!wrap)}
-              checked={wrap}
-            />{" "}
-            Wrap lines
-          </label>
-        </Instructions>
-        <Validator $valid={validation.valid}>
-          {validation.valid ? (
-            <ValidLine>
-              <CheckCircle color={colors.green} />
-              <FlexSpacer />
-              {copyButtons}
-            </ValidLine>
-          ) : (
-            <XCircle color={colors.red} />
-          )}{" "}
-          {validation.error}
-        </Validator>
-        <Buttons>
-          <Button
-            disabled={!validation.valid}
-            onClick={() => {
-              updateChar(parseCharacter(def));
-              navigate("/");
-            }}
+    <EditorBody panelTitle="Edit character">
+      <Editor>
+        <TextArea
+          value={def}
+          onChange={handleChange}
+          wrap={wrap ? "on" : "off"}
+        />
+      </Editor>
+      <Instructions>
+        <span>
+          See{" "}
+          <ExtLink
+            href="https://github.com/Asmor/ndx/#ndx-sentinel-comics-rpg-dice-roller"
+            target="_blank"
           >
-            Set Character
-          </Button>
-          <Button onClick={() => setDef(blank)}>Insert blank template</Button>
-          <Button onClick={() => setDef(getSampleText())}>
-            Insert sample hero
-          </Button>
-          <Button $variant="danger" onClick={() => navigate("/")}>
-            Cancel
-          </Button>
-        </Buttons>
-      </ModalBody>
-    </Backdrop>
+            the readme
+          </ExtLink>{" "}
+          for instructions.
+        </span>
+        <label>
+          <input
+            type="checkbox"
+            onChange={() => setWrap(!wrap)}
+            checked={wrap}
+          />{" "}
+          Wrap lines
+        </label>
+      </Instructions>
+      <Validator $valid={validation.valid}>
+        {validation.valid ? (
+          <ValidLine>
+            <CheckCircle color={colors.green} />
+            <FlexSpacer />
+            {copyButtons}
+          </ValidLine>
+        ) : (
+          <XCircle color={colors.red} />
+        )}{" "}
+        {validation.error}
+      </Validator>
+      <Buttons>
+        <Button
+          disabled={!validation.valid}
+          onClick={() => {
+            updateChar(parseCharacter(def));
+            navigate("/");
+          }}
+        >
+          Set Character
+        </Button>
+        <Button onClick={() => setDef(blank)}>Insert blank template</Button>
+        <Button onClick={() => setDef(getSampleText())}>
+          Insert sample hero
+        </Button>
+        <Button $variant="danger" onClick={() => navigate("/")}>
+          Cancel
+        </Button>
+      </Buttons>
+    </EditorBody>
   );
 };
 

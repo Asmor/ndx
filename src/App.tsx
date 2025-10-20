@@ -1,13 +1,13 @@
 import Main from "./pages/Main";
 import { Route, Routes } from "react-router";
-import TextEditor from "./pages/TextEditor";
+import Editor from "./pages/Editor";
 
 function App() {
   return (
     <Routes>
       <Route index element={<Main />} />
       <Route path="editor">
-        <Route index element={<TextEditor />} />
+        <Route index element={<Editor />} />
       </Route>
     </Routes>
   );

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import type { ComponentProps } from "react";
 import { ExternalLink } from "lucide-react";
-import colors from "../util/colors";
+import colors from "../../util/colors";
 
 const A = styled.a`
   display: inline-flex;
@@ -19,10 +19,10 @@ const A = styled.a`
   }
 `;
 
-interface LinkProps extends ComponentProps<typeof A> {
+interface ExtLink extends ComponentProps<typeof A> {
   className?: string;
 }
-const Link = (props: LinkProps) => {
+const ExtLink = (props: ExtLink) => {
   const nonChildProps = { ...props };
   delete nonChildProps.children;
   return (
@@ -35,4 +35,4 @@ const Link = (props: LinkProps) => {
   );
 };
 
-export default Link;
+export default ExtLink;
