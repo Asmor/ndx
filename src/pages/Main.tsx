@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Abilities from "./ability/Abilities";
-import RecentHistory from "./RecentHistory";
+import Abilities from "../components/ability/Abilities";
+import RecentHistory from "../components/RecentHistory";
 
 const LayoutContainer = styled.div`
   position: fixed;
@@ -36,7 +36,7 @@ const CenterBot = styled(Fill)`
   grid-area: center-bot;
 `;
 
-const Layout = () => {
+const Main = () => {
   return (
     <LayoutContainer>
       <Right>
@@ -51,4 +51,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default Main;

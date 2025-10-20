@@ -18,6 +18,7 @@ import colors from "../../util/colors";
 import { Edit } from "lucide-react";
 import { FilterSelect, type FilterOption } from "../common/FilterSelect";
 import Button from "../common/Button";
+import { Link } from "react-router";
 
 const AbilitiesCont = styled(Panel)`
   padding: ${panelTitleHeight}px 0 0 0;
@@ -190,12 +191,8 @@ const getNoMatchMessage = (
   return `No ${typeText} ${iconText} abilities available at ${status} status.`;
 };
 
-const StyledEdit = styled(Edit)`
-  cursor: pointer;
-`;
-
 const Abilities = () => {
-  const { getCurrentLoadout, status, setStatus, setShowEditor } = useLoadouts();
+  const { getCurrentLoadout, status, setStatus } = useLoadouts();
   const [iconFilter, setIconFilter] = useState(defaultIconFilter);
   const [typeFilter, setTypeFilter] = useState(defaultTypeFilter);
   // todo update this to discriminate based on type of loadout
@@ -248,7 +245,9 @@ const Abilities = () => {
       panelTitle={
         <>
           {char.name}'s Abilities{" "}
-          <StyledEdit size={18} onClick={() => setShowEditor(true)} />
+          <Link to="/editor">
+            <Edit size={18} />
+          </Link>
         </>
       }
     >

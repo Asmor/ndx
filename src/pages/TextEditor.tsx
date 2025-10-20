@@ -7,15 +7,16 @@ import {
 } from "react";
 import styled, { css } from "styled-components";
 import useLoadouts from "../services/useLoadouts";
-import Panel from "./common/Panel";
+import Panel from "../components/common/Panel";
 import colors from "../util/colors";
 import { parseCharacter } from "../util/charMgmt/parsers";
 import { CheckCircle, XCircle } from "lucide-react";
-import Button from "./common/Button";
-import Link from "./Link";
+import Button from "../components/common/Button";
+import TodoRenameMyLink from "../components/Link";
 import LZString from "lz-string";
-import { CopyButton } from "./common/CopyButton";
-import FlexSpacer from "./common/FlexSpacer";
+import { CopyButton } from "../components/common/CopyButton";
+import FlexSpacer from "../components/common/FlexSpacer";
+import { useNavigate } from "react-router";
 
 const Backdrop = styled.div`
   position: fixed;
@@ -121,14 +122,9 @@ const getMarkdownShareLink = (name: string, data: string) => {
   return `[Load ${name} in NDX](${link})`;
 };
 
-const CharacterEditorModal = () => {
-  const {
-    getRaw,
-    updateLoadout: updateChar,
-    showEditor,
-    setShowEditor,
-    getSampleText,
-  } = useLoadouts();
+const TextEditor = () => {
+  const navigate = useNavigate();
+  const { getRaw, updateLoadout: updateChar, getSampleText } = useLoadouts();
   const [def, setDef] = useState("");
   const [validation, setValidation] = useState({
     valid: true,
@@ -138,11 +134,9 @@ const CharacterEditorModal = () => {
   const [wrap, setWrap] = useState(false);
 
   useEffect(() => {
-    if (showEditor) {
-      const curDef = getRaw();
-      setDef(curDef);
-    }
-  }, [showEditor, getRaw]);
+    const curDef = getRaw();
+    setDef(curDef);
+  }, [getRaw]);
 
   useEffect(() => {
     try {
@@ -174,7 +168,6 @@ const CharacterEditorModal = () => {
     );
   }, [def, validation]);
 
-  if (!showEditor) return null;
   return (
     <Backdrop>
       <ModalBody panelTitle="Edit character">
@@ -188,12 +181,12 @@ const CharacterEditorModal = () => {
         <Instructions>
           <span>
             See{" "}
-            <Link
+            <TodoRenameMyLink
               href="https://github.com/Asmor/ndx/#ndx-sentinel-comics-rpg-dice-roller"
               target="_blank"
             >
               the readme
-            </Link>{" "}
+            </TodoRenameMyLink>{" "}
             for instructions.
           </span>
           <label>
@@ -222,7 +215,7 @@ const CharacterEditorModal = () => {
             disabled={!validation.valid}
             onClick={() => {
               updateChar(parseCharacter(def));
-              setShowEditor(false);
+              navigate("/");
             }}
           >
             Set Character
@@ -231,7 +224,7 @@ const CharacterEditorModal = () => {
           <Button onClick={() => setDef(getSampleText())}>
             Insert sample hero
           </Button>
-          <Button $variant="danger" onClick={() => setShowEditor(false)}>
+          <Button $variant="danger" onClick={() => navigate("/")}>
             Cancel
           </Button>
         </Buttons>
@@ -240,4 +233,4 @@ const CharacterEditorModal = () => {
   );
 };
 
-export default CharacterEditorModal;
+export default TextEditor;

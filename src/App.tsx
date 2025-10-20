@@ -1,13 +1,15 @@
-import "./Theme.scss";
-import "./App.scss";
-import Layout from "./components/Layout";
-import CharacterEditorModalProps from "./components/CharacterEditorModal";
+import Main from "./pages/Main";
+import { Route, Routes } from "react-router";
+import TextEditor from "./pages/TextEditor";
+
 function App() {
   return (
-    <>
-      <Layout />
-      <CharacterEditorModalProps />
-    </>
+    <Routes>
+      <Route index element={<Main />} />
+      <Route path="editor">
+        <Route index element={<TextEditor />} />
+      </Route>
+    </Routes>
   );
 }
 

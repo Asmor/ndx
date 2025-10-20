@@ -1,3 +1,13 @@
+# Current Task
+
+- [x] Routing
+  - [x] Add router
+  - [x] Separate character editor modal out into a new page
+  - [ ] Update character editor to take advantage of being its own page
+- [ ] Then: Visual character editor
+
+# Checklist
+
 - [x] Character support
   - [x] Make sample character
   - [x] Parse sample character

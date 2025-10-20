@@ -13,7 +13,6 @@ const cordelia = parseCharacter(sampleCharacterText);
 const statusAtom = atom("Green");
 const characterAtom = atom<Loadout>(BlankCharacter);
 
-const showEditorAtom = atom(false);
 const loadsoutAtom = atom<LoadoutDict>();
 
 // Ensures that code a function is run exactly once.
@@ -33,7 +32,6 @@ export const runLoadoutsInitAtom = atom(
 const useLoadouts = () => {
   const [status, setStatus] = useAtom(statusAtom);
   const [currentLoadout, setCurrentLoadout] = useAtom(characterAtom);
-  const [showEditor, setShowEditor] = useAtom(showEditorAtom);
   const setLoadouts = useSetAtom(loadsoutAtom);
   const runInitOnce = useSetAtom(runLoadoutsInitAtom);
 
@@ -103,8 +101,6 @@ const useLoadouts = () => {
     getStatusDie,
     getRaw,
     updateLoadout,
-    showEditor,
-    setShowEditor,
     getSampleText,
   };
 };
