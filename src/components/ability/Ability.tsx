@@ -33,6 +33,7 @@ const iconSize = 24;
 
 interface AbContProps {
   $ab: AbilityType;
+  $hasPqLine: boolean;
 }
 const AbCont = styled.div<AbContProps>`
   border-left: 8px solid ${(p) => colorsByColor[p.$ab.color]};
@@ -40,7 +41,7 @@ const AbCont = styled.div<AbContProps>`
   display: grid;
   grid-template-areas:
     "icons name button"
-    "selectors selectors selectors"
+    ${(p) => (p.$hasPqLine ? '"selectors selectors selectors"' : "")}
     "desc desc desc";
   grid-template-columns: auto 1fr auto;
   gap: 8px;
@@ -124,7 +125,8 @@ interface AbilityProps {
 }
 const Ability = ({ ability, preview }: AbilityProps) => {
   const { addAbilityResult } = useHistory();
-  const { status, getStatusDie, getCurrentLoadout } = useLoadouts();
+  const { status, getStatusDie, getCurrentLoadout, getRequiredPqData } =
+    useLoadouts();
   const char = getCurrentLoadout();
 
   if (!isCharacter(char)) {
@@ -241,6 +243,11 @@ const Ability = ({ ability, preview }: AbilityProps) => {
     else handleRollFull();
   }, [handleRollFull, handleRollSingle, ability]);
 
+  const { pqTooltip, missingRequiredPq } = useMemo(
+    () => getRequiredPqData(ability),
+    [getRequiredPqData, ability]
+  );
+
   const selectors = useMemo(() => {
     if (preview) {
       if (ability.generic) return <PreviewInfo>Generic roll</PreviewInfo>;
@@ -250,6 +257,8 @@ const Ability = ({ ability, preview }: AbilityProps) => {
           {highlightText({
             text: `Requires ${ability.required.name} (${ability.required.type})`,
             phrase: ability.required.name,
+            tooltip: pqTooltip,
+            valid: !missingRequiredPq,
           })}
         </PreviewInfo>
       );
@@ -271,7 +280,15 @@ const Ability = ({ ability, preview }: AbilityProps) => {
         {qualitySelector}
       </>
     );
-  }, [ability, powerSelector, qualitySelector, handleRollGeneric, preview]);
+  }, [
+    ability,
+    powerSelector,
+    qualitySelector,
+    handleRollGeneric,
+    preview,
+    pqTooltip,
+    missingRequiredPq,
+  ]);
 
   const description = useMemo(() => {
     const parts: ReactNode[] = [];
@@ -285,6 +302,8 @@ const Ability = ({ ability, preview }: AbilityProps) => {
         ? highlightText({
             text: ability.description,
             phrase: ability.required.name,
+            tooltip: pqTooltip,
+            valid: !missingRequiredPq,
           })
         : ability.description;
       parts.push(
@@ -320,7 +339,7 @@ const Ability = ({ ability, preview }: AbilityProps) => {
   }, [ability, handleRoll, preview]);
 
   return (
-    <AbCont $ab={ability}>
+    <AbCont $ab={ability} $hasPqLine={!!selectors}>
       <AbName>{ability.name}</AbName>
       {!!iconImgs.length && <AbIcons>{iconImgs}</AbIcons>}
       <AbSelectors>{selectors}</AbSelectors>

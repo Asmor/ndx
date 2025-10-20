@@ -54,7 +54,7 @@ const getDisplay = (effect: AbilityEffectType, roll?: AbilityResultRoll) => {
   if (effect.ndx.x) minMidMax.push("Max");
   parts.push(minMidMax.join("+"));
   if (value) {
-    parts.push(minMidMax.join("+"), "=", value.toString());
+    parts.push("=", value.toString());
   }
   const tooltip = parts.join(" ");
 

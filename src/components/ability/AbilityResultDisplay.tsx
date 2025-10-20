@@ -12,6 +12,7 @@ import { getUsedIcons } from "../../util/ability";
 import IconImg from "../common/IconImg";
 import { allNDX, type DNotation } from "../../constants";
 import { highlightText } from "../../util/strings";
+import useLoadouts from "../../services/useLoadouts";
 
 // todo want to get these resizing to take better advantage of their container's available width.
 const minContainerWidth = 360;
@@ -34,6 +35,7 @@ const Container = styled(Panel)<ContainerProps>`
   margin: 0;
   transition: all 500ms cubic-bezier(0.5, 0, 0.5, 1.5);
   flex: 1;
+  max-height: none;
 
   ${(p) =>
     p.flash
@@ -107,6 +109,7 @@ const AbilityResultDisplay = ({
   rolled,
   timestamp,
 }: AbilityResult & { timestamp: Date }) => {
+  const { getRequiredPqData } = useLoadouts();
   const [flash, setFlash] = useState(true);
   useEffect(() => void setTimeout(() => setFlash(false), 100), [setFlash]);
   const title = (
@@ -134,6 +137,11 @@ const AbilityResultDisplay = ({
     [roll, rolled]
   );
 
+  const { pqTooltip, missingRequiredPq } = useMemo(
+    () => getRequiredPqData(ability),
+    [getRequiredPqData, ability]
+  );
+
   return (
     <Container
       panelTitle={title}
@@ -151,6 +159,8 @@ const AbilityResultDisplay = ({
           highlightText({
             text: ability.description,
             phrase: ability.required.name,
+            tooltip: pqTooltip,
+            valid: !missingRequiredPq,
           })) ||
           ability.description}
       </Info>

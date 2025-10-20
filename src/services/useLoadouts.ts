@@ -2,7 +2,12 @@ import { atom, useAtom, useSetAtom } from "jotai";
 import sampleCharacterText from "../samples/cordelia.txt?raw";
 import { parseCharacter } from "../util/charMgmt/parsers";
 import { useCallback, useEffect } from "react";
-import type { Loadout, LoadoutDict } from "../util/charMgmt/types";
+import type {
+  Ability,
+  Character,
+  Loadout,
+  LoadoutDict,
+} from "../util/charMgmt/types";
 import { getLoadouts, setLoadout } from "../util/storage/loadouts";
 import { BlankCharacter } from "../util/charMgmt/misc";
 import { getDefinition } from "../util/charMgmt/getDefinition";
@@ -93,6 +98,38 @@ const useLoadouts = () => {
   );
   const getCurrentLoadout = useCallback(() => currentLoadout, [currentLoadout]);
   const getSampleText = useCallback(() => sampleCharacterText, []);
+  const getPqDie = useCallback(
+    (req: Ability["required"]) => {
+      if (!req) return null;
+      const { name, type } = req;
+      const char = getCurrentLoadout() as Character;
+      const pqs = type === "power" ? char.powers : char.qualities;
+      const foundPq = pqs.find((pq) => pq.name === name);
+      return foundPq?.die ?? null;
+    },
+    [getCurrentLoadout]
+  );
+
+  const getRequiredPqData = useCallback(
+    (ability: Ability) => {
+      const retVal = { missingRequiredPq: false, pqTooltip: "" };
+      if (!ability.required) return retVal;
+
+      const { type, name } = ability.required;
+
+      const die = getPqDie(ability.required);
+
+      if (!die) {
+        retVal.missingRequiredPq = true;
+        retVal.pqTooltip = `Can't find ${type} "${name}"`;
+      } else {
+        retVal.pqTooltip = `(d${die} ${type})`;
+      }
+
+      return retVal;
+    },
+    [getPqDie]
+  );
 
   return {
     getCurrentLoadout,
@@ -102,6 +139,7 @@ const useLoadouts = () => {
     getRaw,
     updateLoadout,
     getSampleText,
+    getRequiredPqData,
   };
 };
 
